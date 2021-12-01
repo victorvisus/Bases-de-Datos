@@ -1,0 +1,144 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="BBD1DAC8-B9E3-AA9C-DF0F-CF8B559311DD" schemaObject="900F8E7A-0C53-AFB6-F510-80F1FB2EA273" name="PROD_TIENDAS">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>VICTOR</sourceObjSchema>
+<sourceObjName>PROD_TIENDAS</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODTIENDA" id="F7080B48-364C-7FFB-55DA-CAB8C512A5E4">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PROD_TIENDAS</sourceObjSchema>
+<sourceObjName>CODTIENDA</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,3,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AA3BDBB4-7586-3A78-042E-F4B16A9360FF" referredColumn="8D088EB6-43E8-198D-3194-5F79BC38E2E5"/>
+</associations>
+</Column>
+<Column name="CODPRODUCTO" id="AB9EE733-B5CD-CB40-A309-4067CF6A61B4">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PROD_TIENDAS</sourceObjSchema>
+<sourceObjName>CODPRODUCTO</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,5,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="490019E0-AA04-20E1-1E52-DEB0227F62E9" referredColumn="A84F1AF8-3688-D1B0-B74E-F7FEA7DF558F"/>
+</associations>
+</Column>
+<Column name="UNIDADES" id="CF64E167-2CD8-6E99-9588-D3477D9D52B6">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PROD_TIENDAS</sourceObjSchema>
+<sourceObjName>UNIDADES</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<constraintName>STK_UDS_CK</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="Unidades &gt; 0"/>
+<implementationDef dbType="Oracle Database 12cR2" definition="Unidades &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,6,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FECHAULTIMAENTRADA" id="27B3B835-002C-0354-4CE5-54A10BA58E9A">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PROD_TIENDAS</sourceObjSchema>
+<sourceObjName>FECHAULTIMAENTRADA</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BENEFICIO" id="E5C9226F-3652-D5CC-FD3B-6CCEE0D13986">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PROD_TIENDAS</sourceObjSchema>
+<sourceObjName>BENEFICIO</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<constraintName>STK_BEN_CK</constraintName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="Beneficio &gt; 1 AND Beneficio &lt; 5"/>
+<implementationDef dbType="Oracle Database 12cR2" definition="Beneficio &gt; 1 AND Beneficio &lt; 5"/>
+</checkConstraint>
+<ownDataTypeParameters>,1,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="EB849993-81C8-B570-1E55-FE85CB34C073" schemaObject="900F8E7A-0C53-AFB6-F510-80F1FB2EA273" name="PROD_TIENDAS_PK">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>VICTOR</sourceObjSchema>
+<sourceObjName>SYS_C007538</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F7080B48-364C-7FFB-55DA-CAB8C512A5E4"/>
+<colUsage columnID="AB9EE733-B5CD-CB40-A309-4067CF6A61B4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0EF959CD-840E-4B16-778F-4362EAE63E92" name="STK_CPR_FK">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:09 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AB9EE733-B5CD-CB40-A309-4067CF6A61B4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1FE3FE44-E086-E64E-73E1-1ED2F83C321A" name="STK_CTI_FK">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:09 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F7080B48-364C-7FFB-55DA-CAB8C512A5E4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,128 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2DBD71EE-EB12-5FB8-C3A9-F475565A1676" schemaObject="900F8E7A-0C53-AFB6-F510-80F1FB2EA273" name="TIENDA">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>VICTOR</sourceObjSchema>
+<sourceObjName>TIENDA</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:05 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODTIENDA" id="8D088EB6-43E8-198D-3194-5F79BC38E2E5">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>CODTIENDA</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,3,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DENOTIENDA" id="50336723-F4E5-9AFA-2284-F1C4D1252C9F">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>DENOTIENDA</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TELEFONO" id="42FE4AC3-9B14-EE24-73D6-1FD255ECE304">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>TELEFONO</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>11 BYTE</dataTypeSize>
+<ownDataTypeParameters>11 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CODIGOPOSTAL" id="DB6CABBC-A937-7675-783A-95B6C677C987">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>CODIGOPOSTAL</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>5 BYTE</dataTypeSize>
+<ownDataTypeParameters>5 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PROVINCIA" id="EE049566-E330-C1B5-FC0B-A7E54AEE0BEC">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>PROVINCIA</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>5 BYTE</dataTypeSize>
+<ownDataTypeParameters>5 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="322E99A4-E41A-81EF-5E0D-1BAAC6D2AD64" schemaObject="900F8E7A-0C53-AFB6-F510-80F1FB2EA273" name="TIENDA_PK">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>VICTOR</sourceObjSchema>
+<sourceObjName>SYS_C007533</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8D088EB6-43E8-198D-3194-5F79BC38E2E5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AD84FD88-3B99-4573-3077-B2D937AEA0C0" name="TIE_CPO_UN">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>VICTOR</sourceObjSchema>
+<sourceObjName>TIE_CPO_UN</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:07 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DB6CABBC-A937-7675-783A-95B6C677C987"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5FF3D247-5F16-7E55-2750-BCDBFC32A3F1" schemaObject="900F8E7A-0C53-AFB6-F510-80F1FB2EA273" name="TIE_CPO_UN">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>VICTOR</sourceObjSchema>
+<sourceObjName>TIE_CPO_UN</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DB6CABBC-A937-7675-783A-95B6C677C987"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

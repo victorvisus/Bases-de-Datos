@@ -1,0 +1,170 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="13ABD517-027D-EB58-B978-8C6CE934CBA6" schemaObject="900F8E7A-0C53-AFB6-F510-80F1FB2EA273" name="PRODUCTO">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>VICTOR</sourceObjSchema>
+<sourceObjName>PRODUCTO</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODPRODUCTO" id="A84F1AF8-3688-D1B0-B74E-F7FEA7DF558F">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PRODUCTO</sourceObjSchema>
+<sourceObjName>CODPRODUCTO</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,5,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DENOPRODUCTO" id="FECB94EB-30AD-49D9-7BD7-2DC7DB689C2E">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PRODUCTO</sourceObjSchema>
+<sourceObjName>DENOPRODUCTO</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPCION" id="784A0092-F0EB-1A1A-1A00-48292E0503E9">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PRODUCTO</sourceObjSchema>
+<sourceObjName>DESCRIPCION</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRECIOBASE" id="BAF0C375-7A59-BF86-F2F4-BAC14E236EC0">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PRODUCTO</sourceObjSchema>
+<sourceObjName>PRECIOBASE</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<constraintName>PRO_PVP_CK</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="PrecioBase &gt; 0"/>
+<implementationDef dbType="Oracle Database 12cR2" definition="PrecioBase &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,6,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PORCREPOSICION" id="E413FABE-B725-EF59-FABB-07941DDC7CA7">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PRODUCTO</sourceObjSchema>
+<sourceObjName>PORCREPOSICION</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<constraintName>PRO_REP_CK</constraintName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="PorcReposicion &gt; 0"/>
+<implementationDef dbType="Oracle Database 12cR2" definition="PorcReposicion &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,3,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UNIDADESMINIMAS" id="7F84B884-1B07-30D1-48C6-6D18A05DE340">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PRODUCTO</sourceObjSchema>
+<sourceObjName>UNIDADESMINIMAS</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<constraintName>PRO_UDS_CK</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="UnidadesMinimas &gt; 0"/>
+<implementationDef dbType="Oracle Database 12cR2" definition="UnidadesMinimas &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,4,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CODFAMILIA" id="9DD214E5-E686-B072-EE94-158465DDFDC5">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PRODUCTO</sourceObjSchema>
+<sourceObjName>CODFAMILIA</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,3,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PERECEDERO" id="A36B8410-04B0-91CA-E24A-50911A72AB5E">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>PRODUCTO</sourceObjSchema>
+<sourceObjName>PERECEDERO</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<constraintName>PRO_PER_CK</constraintName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1 BYTE</dataTypeSize>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="Perecedero = &apos;S&apos; OR Perecedero = &apos;N&apos;"/>
+<implementationDef dbType="Oracle Database 12cR2" definition="Perecedero = &apos;S&apos; OR Perecedero = &apos;N&apos;"/>
+</checkConstraint>
+<ownDataTypeParameters>1 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="CC1B3061-CB41-E5D2-6C85-62BA14A9C5DC" schemaObject="900F8E7A-0C53-AFB6-F510-80F1FB2EA273" name="PRODUCTO_PK">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>VICTOR</sourceObjSchema>
+<sourceObjName>SYS_C007528</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A84F1AF8-3688-D1B0-B74E-F7FEA7DF558F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

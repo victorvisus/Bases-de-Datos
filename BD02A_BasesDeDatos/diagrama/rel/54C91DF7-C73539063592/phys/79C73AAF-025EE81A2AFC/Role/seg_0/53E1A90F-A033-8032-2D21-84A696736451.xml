@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<RoleOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.RoleOraclev10g" name="INVITADO" directorySegmentName="seg_0" id="53E1A90F-A033-8032-2D21-84A696736451">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjName>INVITADO</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:10 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<permissions>
+<Permission class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PermissionsOraclev10g" name="Permissions1" id="3DC75CDE-6ED6-CDC4-494E-CBB704FC9E66">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:10 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<privileges>INDEX, INSERT, SELECT, UPDATE, REFERENCES, READ, ON COMMIT REFRESH, QUERY REWRITE, DEBUG, FLASHBACK</privileges>
+<table>13ABD517-027D-EB58-B978-8C6CE934CBA6</table>
+</Permission>
+</permissions>
+</RoleOraclev10g>
