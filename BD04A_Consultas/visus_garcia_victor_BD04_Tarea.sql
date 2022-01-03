@@ -190,10 +190,10 @@ SELECT d.denominacion, COUNT(e.nombre) FROM dpto d
 -- 18. Obtener un listado de las localidades en las que hay centros y no vive
 -- ningún empleado ordenado alfabéticamente.
 SELECT e.localidad FROM empleado e, dpto d
-WHERE d.coddpto = e.coddpto
-AND e.localidad
-NOT IN (
-SELECT UPPER(c.localidad) FROM centro c
+  WHERE d.coddpto = e.coddpto
+  AND e.localidad
+  NOT IN (
+    SELECT UPPER(c.localidad) FROM centro c
 );
 
 /* ----------------------------------------------------------------- CONSULTA 19 */
