@@ -150,10 +150,10 @@ SELECT e.localidad, COUNT(e.nombre) FROM empleado e
 
 /* ----------------------------------------------------------------- CONSULTA 13 */
 -- 13. Obtener el departamento que más empleados tiene
-/* SELECT e.coddpto, COUNT(e.nombre) AS num_emple FROM empleado e
+SELECT e.coddpto, COUNT(e.nombre) AS num_emple FROM empleado e
   GROUP BY e.coddpto
-  ORDER BY num_emple DESC;
-*/
+  ORDER BY num_emple;
+
 
 /* ----------------------------------------------------------------- CONSULTA 14 */
 --  14. Obtener los nombres de todos los centros y los departamentos que se
@@ -185,6 +185,11 @@ SELECT d.denominacion, COUNT(e.nombre) FROM dpto d
 --  17. Obtener un listado ordenado alfabéticamente donde aparezcan los nombres
 -- de los empleados y a continuación el literal "tiene comisión" si la tiene, y
 -- "no tiene comisión" si no la tiene.
+SELECT e.nombre,
+  DECODE(TO_CHAR(e.comision), NULL, 'no tiene comision',
+                              'tiene comision') AS comision_emp
+  FROM empleado e
+;
 
 /* ----------------------------------------------------------------- CONSULTA 18 */
 -- 18. Obtener un listado de las localidades en las que hay centros y no vive
@@ -203,7 +208,29 @@ SELECT e.localidad FROM empleado e, dpto d
 -- (b) Si lleva entre 6 y 10 años, se le dará 50 euros por año
 -- (c) Si lleva entre 11 y 20 años, se le dará 70 euros por año
 -- (d) Si lleva más de 21 años, se le dará 100 euros por año
+SELECT nombre || ' ' || ape1 || ' ' || ape2 AS Empleado,
+  TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0) AS Antigüedad,
+  CASE 
+    WHEN TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0) >= 1 AND
+      TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0) <= 5
+      THEN 100
+      
+    WHEN TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0) >= 6 AND
+      TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0) <= 10
+      THEN TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0)*50
+      
+    WHEN TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0) >= 11 AND
+      TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0) <= 20
+      THEN TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0)*70
 
+    WHEN TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0) >= 21
+      THEN TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0)*100
+
+    END gratificacion
+
+  FROM empleado
+  ORDER BY Antigüedad
+;
 /* ----------------------------------------------------------------- CONSULTA 20 */
 --  20. Obtener a los nombres, apellidos de los empleados que no son jefes de
 -- departamento.
