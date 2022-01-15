@@ -17,9 +17,23 @@ SELECT nombre, comision FROM empleado WHERE comision > salario*0.2;
 -- y dentro de éstos por orden alfabético.
 
 -- ¿ORDEN ALFABÉTICO SOBRE EL NOMBRE DEL EMPLEADO O SOBRE LA DENOMINACIÓN DEL DEPARTAMENTO? --
-SELECT e.codemple, e.coddpto, e.nombre, e.salario*166.386 AS Sueldo_ptas FROM empleado e
+SELECT e.codemple, e.coddpto, e.nombre, e.salario*166.386 AS Sueldo_ptas, e.salario FROM empleado e
   JOIN dpto d ON d.coddpto = e.coddpto
   WHERE e.salario+e.comision > 1800 ORDER BY d.coddpto, d.denominacion;
+
+/** Solución del profesor ---
+ * Cualquier operación que se haga con un valor NULL devuelve un NULL. Por ejemplo,
+ * si se intenta dividir por NULL, no nos aparecerá ningún error sino que como resultado
+ * obtendremos un NULL (no se producirá ningún error tal y como puede suceder si 
+ * intentáramos dividir por cero).
+ * 
+ * NVL(valor, expr1): 
+ * Si valor es NULL, entonces devuelve expr1. Ten en cuenta que expr1 debe ser del
+ * mismo tipo que valor.
+ **/  
+select coddpto,codemple,nombre,ape1,(salario+nvl(comision,0))*166.386, (salario+nvl(comision,0))
+from empleado where salario+nvl(comision,0)>1800
+order by coddpto,nombre,ape1;
 
 /* ----------------------------------------------------------------- CONSULTA 4 */
 -- 4. Obtener una listado ordenado por años en la empresa con los nombres, y
@@ -28,6 +42,10 @@ SELECT nombre || ' ' || ape1 || ' ' || ape2 AS Empleado,
   TRUNC(MONTHS_BETWEEN(SYSDATE,fechaingreso)/12, 0) AS Antigüedad
   FROM empleado
   ORDER BY Antigüedad;
+
+/** Solución del profesor --- */
+SELECT nombre,ape1,ape2, (sysdate-fechaingreso)/365.20 as "Antigüedad" from empleado
+order by 3;
 
 /* ----------------------------------------------------------------- CONSULTA 5 */
 -- 5. Obtener el nombre de los empleados que trabajan en un departamento con
@@ -43,7 +61,6 @@ SELECT e.nombre FROM empleado e WHERE e.coddpto IN (
   SELECT d.coddpto FROM dpto d WHERE d.presupuesto > 50000
 );
 
-
 SELECT e.nombre, e.coddpto AS cod_Dpto FROM empleado e
   WHERE e.coddpto > SOME (
   SELECT coddpto FROM dpto WHERE presupuesto > 50000
@@ -55,6 +72,9 @@ SELECT e.nombre, d.coddpto AS cod_Dpto, d.denominacion, d.presupuesto FROM emple
   SELECT d.presupuesto FROM dpto d WHERE d.presupuesto > 50000)
   ORDER BY e.coddpto;
 
+/** Solución del profesor --- */
+select ape1,nombre from empleado where coddpto= some(select coddpto from dpto where
+presupuesto>50000);
 
 /* ----------------------------------------------------------------- CONSULTA 6 */
 -- 6. Obtener en orden alfabético los nombres de empleado cuyo salario es
@@ -84,7 +104,11 @@ SElECT e.nombre
   FROM empleado e
   JOIN dpto d ON e.coddpto = d.coddpto
   WHERE d.codemplejefe = 1;
-  
+
+/** Solución del profesor --- */
+select nombre,ape1 from empleado where coddpto = some (select coddpto from dpto
+where codemplejefe=1);
+
 /* ----------------------------------------------------------------- CONSULTA 8 */
 --  8. Obtener los nombres de los empleados cuyo primer apellido empiece por las
 -- letras p, q, r, s.
