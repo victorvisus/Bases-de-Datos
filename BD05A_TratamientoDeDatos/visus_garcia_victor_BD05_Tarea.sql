@@ -1,3 +1,23 @@
+/*  1. Inserta un registro nuevo en la tabla PROFESORADO utilizando la herramienta
+gráfica Application Express que ofrece Oracle Database Express. Los datos deben 
+ser los siguientes:
+    Codigo: 1
+    Nombre: NURIA
+    Apellidos: ANERO GONZALEZ
+    DNI: 58328033X
+    Especialidad: MATEMATICAS
+    Fecha_Nac: 22/02/1972
+    Antiguedad: 9
+Debes entregar una captura de pantalla de la ventana en la que estás introduciendo
+los datos, justo antes de pulsar el botón para guardarlos.
+
+
+SE ADJUNTA ARCHIVO PDF, con la información requerida: 
+
+He tenido que usar el SQL Developer porque con el APEX me ha sido imposible, en 
+el temario no aparece ninguna explicación sobre esta herramienta gráfica
+*/
+
 
 /*  2. Inserta varios registros más en la tabla PROFESORADO utilizando sentencias SQL.
 Los datos deben ser los siguientes:
