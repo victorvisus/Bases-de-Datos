@@ -1,7 +1,8 @@
-drop user c##agencia cascade;
-create user c##agencia identified by agencia default tablespace users;
-grant connect,resource,dba to c##agencia;
-conn c##agencia/agencia
+drop user agencia cascade;
+create user agencia identified by agencia default tablespace users;
+grant connect,resource,dba to agencia;
+conn agencia/agencia
+
 create table oficinas (
      identificador     number(6) not null primary key,
      nombre          varchar2(40) not null unique,
