@@ -1,4 +1,4 @@
-/**
+/*
 Eliminar Tablas:
 
 DROP TABLE nombre_tabla;
