@@ -7,6 +7,8 @@
 -- DROP TABLE Tienda CASCADE CONSTRAINTS;
 -- DROP TABLE Stock CASCADE CONSTRAINTS;
 
+-- DROP TABLE STOCK_TIENDAS CASCADE CONSTRAINTS;
+
 /** Mediante el uso de sentencias DDL de SQL crea la tablas especificadas a continuación
 aplicando las restricciones (constraints) indicadas. Siempre debemos de garantizar la
 integridad referencial
