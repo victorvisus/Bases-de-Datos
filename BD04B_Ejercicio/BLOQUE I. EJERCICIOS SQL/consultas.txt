@@ -1,0 +1,26 @@
+A continuación y sobre la base de datos que Juegos Online que has creado resuelve y prueba en  tu ordenador las siguientes sentencias SQL.
+
+
+1 . Nombre y apellidos de los usuarios con crédito entre 200 y 400 ordenado por crédito descendente.
+
+2. ¿Cuántos usuarios son mujeres?
+
+3. Nombre y apellidos de los usuarios que tiene correo en Hotmail ordenado por apellido y nombre.
+
+4. Suma del crédito de los usuarios de la provincia de Barcelona.
+
+5. Nombre, apellidos y fecha de nacimiento del usuario de mas edad.
+
+6. Listado con la suma del crédito de los usuarios de cada una de las provincias ordenado por provincia.
+
+7. Provincias en las que la suma del crédito de los usuarios es menos de 200.
+
+8. ¿Cuál es la provincia en la que la suma de crédito de los usuarios es la mayor de todas?
+
+9. Nombre y apellidos del usuario que ha creado cada una de las partidas indicando de qué juego son.
+
+10. Juegos de los que no hay partida comenzada.
+
+11. Listado de juegos de los que hay partida en funcionamiento.
+
+12. Listado de nombre y apellidos de usuario y número de partidas en las que está jugando ordenador de mayor a menor.

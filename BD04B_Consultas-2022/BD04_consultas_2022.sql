@@ -46,6 +46,8 @@ SELECT e.nombre, d.coddpto AS "CODIGO DPTO", d.denominacion, d.presupuesto AS "P
   WHERE d.presupuesto = ANY (
     SELECT d.presupuesto FROM dpto d WHERE d.presupuesto > 50000 AND d.presupuesto < 60000)
   ORDER BY e.coddpto;
+-- No da ningun resultado debido a que no hay ningun dpto que cumpla con la condición
+-- SELECT d.presupuesto FROM dpto d ;
 
 /**
 5. Obtener en orden alfabético los nombres de empleado cuyo salario es inferior
@@ -64,7 +66,7 @@ jefe el empleado con código 1.
 SELECT e.nombre || ' ' || e.ape1 AS nombre, e.coddpto, d.denominacion, d.codemplejefe
     FROM empleado e
     INNER JOIN dpto d ON e.coddpto = d.coddpto
-    WHERE d.codemplejefe = 1;
+    WHERE d.codemplejefe = 1; 
 
 /**
 7. Obtener los nombres de los empleados cuyo primer apellido empiece por una de
@@ -81,7 +83,11 @@ SELECT e.nombre, e.ape1 FROM empleado e
 8. Obtener los nombres de los empleados que viven en ciudades en las que hay algún
 centro de trabajo
 **/
-
+SELECT nombre, localidad
+    FROM empleado
+    WHERE UPPER(localidad) = ANY (
+        SELECT UPPER(localidad) FROM centro
+    );
 
 /**
 9. Obtener en orden alfabético los salarios y nombres de los empleados cuyo salario
@@ -95,7 +101,7 @@ SELECT e.nombre, e.salario
 /**
 10.	El nombre y apellidos del empleado que más salario cobra
 **/
-SELECT e.nombre, e.ape1, e.ape2
+SELECT e.nombre, e.ape1, e.ape2, e.salario
     FROM empleado e
     WHERE e.salario = (
         SELECT MAX(e.salario)FROM empleado e);
@@ -104,8 +110,9 @@ SELECT e.nombre, e.ape1, e.ape2
 11. Obtener las localidades y número de empleados de aquellas en las que viven
 más de 3 empleados
 **/
-SELECT localidad, COUNT(codemple) AS "num_empleado" FROM empleado  
-GROUP BY localidad HAVING COUNT(codemple) > 3;
+SELECT localidad, COUNT(codemple) AS num_empleados FROM empleado  
+    GROUP BY localidad
+    HAVING COUNT(codemple) > 3;
 
 /**
 12. Obtener los nombres de todos los centros y los departamentos que se ubican en
@@ -113,8 +120,8 @@ cada uno, así como aquellos centros que no tienen departamentos.
 **/
 -- Consulta sin modificar la tabla del ejercicio, usando el campo codcentro en vez del nombre
 SELECT c.codcentro, d.denominacion AS Departamento FROM centro c
-LEFT OUTER JOIN dpto d ON c.codcentro = d.codcentro
-ORDER BY c.codcentro;
+    LEFT OUTER JOIN dpto d ON c.codcentro = d.codcentro
+    ORDER BY c.codcentro;
 
 /**
 -- NO Exite un campo nombre. Modifico la tabla, para  poder trabajar con los nombres
@@ -122,6 +129,7 @@ ORDER BY c.codcentro;
 la consulta, lista también los centros que no tienen departamentos
 **/
 -- Modificación de la tabla
+
 ALTER TABLE centro ADD (nombre_centro VARCHAR2(20));
 
 UPDATE centro SET NOMBRE_CENTRO = 'centro1' WHERE codcentro = 1;
@@ -132,8 +140,8 @@ INSERT INTO centro (codcentro, direccion, localidad, nombre_centro) VALUES (9,'n
 
 -- Consulta
 SELECT c.codcentro, c.nombre_centro, d.denominacion AS Departamentos FROM centro c
-LEFT OUTER JOIN dpto d ON c.codcentro = d.codcentro
-ORDER BY c.nombre_centro;
+    LEFT OUTER JOIN dpto d ON c.codcentro = d.codcentro
+    ORDER BY c.nombre_centro;
 
 /**
 13.	Obtener el nombre del departamento de más alto nivel, es decir, aquel que no
@@ -150,7 +158,23 @@ SELECT d.coddpto, d.denominacion FROM dpto d
     GROUP BY d.denominacion, d.coddpto
     HAVING COUNT(*) = (
         SELECT MAX(COUNT(*)) from empleado group by coddpto);
-        
+
+--Usando "tabla temporal"
+SELECT t.denominacion, t.num_empleados
+    FROM (
+        SELECT d.denominacion, COUNT(*) AS num_empleados
+            FROM empleado e, dpto d
+            WHERE d.coddpto = e.coddpto
+            GROUP BY d.denominacion
+        ) t
+    WHERE t.num_empleados = (
+        SELECT MAX(t2.num_empleados) FROM  (
+            SELECT d.denominacion, COUNT(*) AS num_empleados
+                FROM empleado e, dpto d
+                WHERE d.coddpto = e.coddpto
+                GROUP BY d.denominacion
+            ) t2);
+
 /**
 15.	Obtener todos los departamentos existentes en la empresa y los empleados (si
 los tiene) que pertenecen a él.
@@ -161,9 +185,11 @@ SELECT d.coddpto, d.denominacion, COUNT(e.codemple) FROM dpto d
     GROUP BY d.denominacion, d.coddpto;
     
 -- Muestra los departamentos, y los nombres de los empleados    
+/**
 SELECT d.coddpto, d.denominacion, e.nombre FROM dpto d
     INNER JOIN empleado e ON d.coddpto = e.coddpto
     ORDER BY d.coddpto;
+**/
     
 /**
 16.	Obtener un listado ordenado alfabéticamente donde aparezcan los nombres de 
@@ -173,9 +199,43 @@ comisión" si no la tiene.
 **/
 SELECT e.nombre, NVL2(e.comision, 'tiene comision', 'no tiene comision')
     FROM empleado e
-    ORDER BY e.nombre ASC
+    ORDER BY e.nombre ASC;
     
 /**
 17.	Obtener un listado de las localidades en las que hay centros y no vive ningún
 empleado ordenado alfabéticamente.
 **/
+SELECT c.localidad FROM centro c
+    LEFT OUTER JOIN empleado e ON c.localidad = e.localidad;
+    
+/**
+18.	Obtener a los nombres, apellidos de los empleados que no son jefes de departamento.
+**/
+SELECT e.codemple, e.nombre, e.ape1 || ' ' || e.ape2 AS apellidos
+    FROM empleado e
+    WHERE e.codemple NOT IN (
+        SELECT d.codemplejefe FROM dpto d
+        );
+        
+/**
+19.	Esta cuestión puntúa doble. Se desea dar una gratificación por navidades en
+función de la antigüedad en la empresa siguiendo estas pautas:
+a.	Si lleva entre 1 y 5 años, se le dará 100 euros
+b.	Si lleva entre 6 y 10 años, se le dará 50 euros por año
+c.	Si lleva entre 11 y 20 años, se le dará 70 euros por año
+d.	Si lleva más de 21 años, se le dará 100 euros por año
+**/
+SELECT nombre, FLOOR(MONTHS_BETWEEN(SYSDATE, fechaingreso)/12) AS Antiguedad,
+        CASE
+            WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, fechaingreso)/12) BETWEEN 1 AND 5
+            THEN 100
+            WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, fechaingreso)/12) BETWEEN 6 AND 10
+            THEN FLOOR(MONTHS_BETWEEN(SYSDATE, fechaingreso)/12) * 50
+            WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, fechaingreso)/12) BETWEEN 11 AND 20
+            THEN FLOOR(MONTHS_BETWEEN(SYSDATE, fechaingreso)/12) * 70
+            WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, fechaingreso)/12) >= 21
+            THEN FLOOR(MONTHS_BETWEEN(SYSDATE, fechaingreso)/12) * 100
+        ELSE FLOOR(MONTHS_BETWEEN(SYSDATE, fechaingreso)/12) * 0
+        END AS gratificacion
+    FROM empleado
+    ORDER BY nombre;
