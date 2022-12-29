@@ -110,19 +110,72 @@ GROUP BY localidad HAVING COUNT(codemple) > 3;
 /**
 12. Obtener los nombres de todos los centros y los departamentos que se ubican en
 cada uno, así como aquellos centros que no tienen departamentos.
-
--- NO Exite un campo nombre. Modifico la tabla
 **/
-ALTER TABLE centro ADD (nombre_centro VARCHAR2(20));
-
-INSERT INTO centro (nombre_centro) VALUES (centro1) WHERE codcentro = 1;
-UPDATE centro SET nombre_centro = centro2 WHERE codcentro = 2;
-UPDATE centro SET nombre_centro = centro3 WHERE codcentro = 3;
-
-INSERT INTO centro (codcentro, direccion, localidad, nombre_centro) VALUES (9,nueva_dir, nueva_loc, centro9);
-
-SELECT c.codcentro, d.denominacion FROM centro c
+-- Consulta sin modificar la tabla del ejercicio, usando el campo codcentro en vez del nombre
+SELECT c.codcentro, d.denominacion AS Departamento FROM centro c
 LEFT OUTER JOIN dpto d ON c.codcentro = d.codcentro
 ORDER BY c.codcentro;
 
+/**
+-- NO Exite un campo nombre. Modifico la tabla, para  poder trabajar con los nombres
+-- Inserto un centro nuevo que no tiene departamentos, para poder comprobar que,
+la consulta, lista también los centros que no tienen departamentos
+**/
+-- Modificación de la tabla
+ALTER TABLE centro ADD (nombre_centro VARCHAR2(20));
 
+UPDATE centro SET NOMBRE_CENTRO = 'centro1' WHERE codcentro = 1;
+UPDATE centro SET NOMBRE_CENTRO = 'centro2' WHERE codcentro = 2;
+UPDATE centro SET NOMBRE_CENTRO = 'centro3' WHERE codcentro = 3;
+
+INSERT INTO centro (codcentro, direccion, localidad, nombre_centro) VALUES (9,'nueva_dir', 'nueva_loc', 'centro9');
+
+-- Consulta
+SELECT c.codcentro, c.nombre_centro, d.denominacion AS Departamentos FROM centro c
+LEFT OUTER JOIN dpto d ON c.codcentro = d.codcentro
+ORDER BY c.nombre_centro;
+
+/**
+13.	Obtener el nombre del departamento de más alto nivel, es decir, aquel que no
+depende de ningún otro.
+**/
+SELECT * FROM dpto d WHERE d.coddptodepende IS null;
+
+/**
+14.	Obtener el departamento que más empleados tiene
+**/
+--SELECT MAX(COUNT(*)) from empleado group by coddpto;
+SELECT d.coddpto, d.denominacion FROM dpto d
+    INNER JOIN empleado e ON d.coddpto = e.coddpto
+    GROUP BY d.denominacion, d.coddpto
+    HAVING COUNT(*) = (
+        SELECT MAX(COUNT(*)) from empleado group by coddpto);
+        
+/**
+15.	Obtener todos los departamentos existentes en la empresa y los empleados (si
+los tiene) que pertenecen a él.
+**/
+-- Muestra el numero de empleados de cada departamente, si los tiene
+SELECT d.coddpto, d.denominacion, COUNT(e.codemple) FROM dpto d
+    INNER JOIN empleado e ON d.coddpto = e.coddpto
+    GROUP BY d.denominacion, d.coddpto;
+    
+-- Muestra los departamentos, y los nombres de los empleados    
+SELECT d.coddpto, d.denominacion, e.nombre FROM dpto d
+    INNER JOIN empleado e ON d.coddpto = e.coddpto
+    ORDER BY d.coddpto;
+    
+/**
+16.	Obtener un listado ordenado alfabéticamente donde aparezcan los nombres de 
+los empleados y a continuación el literal "tiene comisión" si la tiene o "no tiene
+comisión" si no la tiene.
+--NVL2(expresion, valor1, valor2): si el valor de la expresión NO es nulo nos devuelve el primer valor, y si es null el segundo
+**/
+SELECT e.nombre, NVL2(e.comision, 'tiene comision', 'no tiene comision')
+    FROM empleado e
+    ORDER BY e.nombre ASC
+    
+/**
+17.	Obtener un listado de las localidades en las que hay centros y no vive ningún
+empleado ordenado alfabéticamente.
+**/
