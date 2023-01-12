@@ -258,6 +258,6 @@ SELECT nombre || ' ' || ape1 || ' ' || ape2 AS Empleado,
 /* ----------------------------------------------------------------- CONSULTA 20 */
 --  20. Obtener a los nombres, apellidos de los empleados que no son jefes de
 -- departamento.
-SELECT e.nombre, e.ape1, e.ape2 FROM empleado e
+SELECT e.codemple, e.nombre, e.ape1, e.ape2 FROM empleado e
   JOIN dpto d ON e.coddpto = d.coddpto
   WHERE e.codemple != d.codemplejefe;

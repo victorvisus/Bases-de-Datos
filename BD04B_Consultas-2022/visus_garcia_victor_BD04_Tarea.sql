@@ -7,6 +7,8 @@ SELECT nombre, salario FROM empleado WHERE salario > 985 AND comision > (salario
 SELECT e.nombre || ' ' || e.ape1 || ' ' || e.ape2, e.salario, e.comision, (e.comision / e.salario) * 100 AS "PORCENTAJE"
     FROM empleado e
     WHERE e.salario > 985 AND e.comision > (e.salario * 0.05);
+--Solucion
+select nombre,ape1,salario from empleado where salario > 1000 and comision > salario * 0.05;
 
 /**
 2. Obtener el código de empleado, código de departamento, nombre y sueldo total 
@@ -22,10 +24,16 @@ SELECT e.nombre, NVL2(e.comision, e.salario + e.comision, e.salario) AS "SUELDO 
 */
 SELECT e.codemple, e.coddpto, e.nombre, e.salario,
     NVL(e.comision, 0) AS "COMISION",
+    NVL2(e.comision, e.salario + e.comision, e.salario) AS "SUELDO TOTAL Euros",
     NVL2(e.comision, e.salario + e.comision, e.salario) * 166.386 AS "SUELDO TOTAL ptas"
     FROM empleado e
     WHERE NVL2(e.comision, e.salario + e.comision, e.salario) > 1350
     ORDER BY e.coddpto, e.nombre;
+    
+--Solucion
+select coddpto,codemple,nombre,ape1,(salario+nvl(comision,0))*166.386
+from empleado where salario+nvl(comision,0)>1800
+order by coddpto,nombre,ape1;
 
 /**
 3.	Obtener un listado con los nombres, y apellidos de los empleados y sus años
@@ -36,6 +44,9 @@ SELECT e.nombre, e.ape1, e.ape2, e.fechaingreso,
     TRUNC(MONTHS_BETWEEN(SYSDATE,e.fechaingreso)/12, 0) AS Antigüedad
     FROM empleado e
     ORDER BY Antigüedad DESC;
+    
+--Solucion: el 4 en el order by indica el nº de atributo por el que lo ordena
+SELECT nombre,ape1,ape2, (sysdate-fechaingreso)/365.20 as "AntigÃ¼edad" from empleado order by 4 desc;
 
 /**
 4. Obtener el nombre de los empleados que trabajan en un departamento con presupuesto
@@ -49,6 +60,9 @@ SELECT e.nombre, d.coddpto AS "CODIGO DPTO", d.denominacion, d.presupuesto AS "P
 -- No da ningun resultado debido a que no hay ningun dpto que cumpla con la condición
 -- SELECT d.presupuesto FROM dpto d ;
 
+--Solucion:
+select ape1,nombre from empleado where coddpto= some(select coddpto from dpto where presupuesto>50000 and presupuesto<60000);
+
 /**
 5. Obtener en orden alfabético los nombres de empleado cuyo salario es inferior
 al mínimo de los empleados del departamento 1.
@@ -58,6 +72,9 @@ SELECT e.nombre, e.salario
     WHERE /* salario < al menor salario de los empleados del dpto 1*/
     e.salario < (
         SELECT MIN(e1.salario) FROM empleado e1 WHERE e1.coddpto = 1);
+--Corrección: 5.- parcialmente bien resuelta, no ordenadas el resultado.
+--Solucion
+select nombre,ape1,salario from empleado where salario < (select min(salario) from empleado where coddpto=1);
 
 /**
 6. Obtener el nombre de los empleados que trabajan en el departamento del cuál es
@@ -66,7 +83,10 @@ jefe el empleado con código 1.
 SELECT e.nombre || ' ' || e.ape1 AS nombre, e.coddpto, d.denominacion, d.codemplejefe
     FROM empleado e
     INNER JOIN dpto d ON e.coddpto = d.coddpto
-    WHERE d.codemplejefe = 1; 
+    WHERE d.codemplejefe = 1;
+--Corrección: 6.- parcialmente bien resuelta, sobra la última condición de la setencia. SI LA QUITO NO FUNCIONA CORRECTAMENTE
+--Solucion
+select nombre,ape1 from empleado where coddpto = some (select coddpto from dpto where codemplejefe=1);
 
 /**
 7. Obtener los nombres de los empleados cuyo primer apellido empiece por una de
@@ -79,6 +99,9 @@ SELECT e.nombre, e.ape1 FROM empleado e
     OR LOWER(e.ape1) LIKE('r%')
     OR LOWER(e.ape1) LIKE('s%');
 
+--Solucion
+select nombre,ape1 from empleado where substr(ape1,1,1) between 'P' and 'S';
+
 /**
 8. Obtener los nombres de los empleados que viven en ciudades en las que hay algún
 centro de trabajo
@@ -89,6 +112,9 @@ SELECT nombre, localidad
         SELECT UPPER(localidad) FROM centro
     );
 
+--Solucion
+select ape1, nombre from empleado where upper(localidad) in (select upper(localidad) from centro);
+
 /**
 9. Obtener en orden alfabético los salarios y nombres de los empleados cuyo salario
 sea superior al 60% del máximo salario de la empresa.
@@ -97,6 +123,9 @@ SELECT e.nombre, e.salario
     FROM empleado e
     WHERE e.salario > (
         SELECT MAX(e.salario) * 0.6 FROM empleado e);
+--Corrección: 9.- parcialmente bien resuelta, no ordenadas el resultado.
+--Solucion
+select salario,nombre from empleado where salario >(select max(salario) * 0.6 from empleado) order by nombre;
 
 /**
 10.	El nombre y apellidos del empleado que más salario cobra
@@ -106,6 +135,9 @@ SELECT e.nombre, e.ape1, e.ape2, e.salario
     WHERE e.salario = (
         SELECT MAX(e.salario)FROM empleado e);
 
+--Solucion
+select nombre,ape1,ape2, salario from empleado where salario=(select MAX(salario) from empleado);
+
 /**
 11. Obtener las localidades y número de empleados de aquellas en las que viven
 más de 3 empleados
@@ -113,6 +145,9 @@ más de 3 empleados
 SELECT localidad, COUNT(codemple) AS num_empleados FROM empleado  
     GROUP BY localidad
     HAVING COUNT(codemple) > 3;
+
+--Solucion
+select localidad,count(*) from empleado group by localidad having count(*) > 3 order by 2;
 
 /**
 12. Obtener los nombres de todos los centros y los departamentos que se ubican en
@@ -122,6 +157,9 @@ cada uno, así como aquellos centros que no tienen departamentos.
 SELECT c.codcentro, d.denominacion AS Departamento FROM centro c
     LEFT OUTER JOIN dpto d ON c.codcentro = d.codcentro
     ORDER BY c.codcentro;
+
+--Solucion
+select tc.direccion,td.denominacion from centro tc left join dpto td on tc.codcentro=td.codcentro order by 1,2;
 
 /**
 -- NO Exite un campo nombre. Modifico la tabla, para  poder trabajar con los nombres
@@ -146,6 +184,10 @@ SELECT c.codcentro, c.nombre_centro, d.denominacion AS Departamentos FROM centro
 depende de ningún otro.
 **/
 SELECT * FROM dpto d WHERE d.coddptodepende IS null;
+--Corrección: 13.- bien resuelta, no existia el campo nombre, podrías haber devuelto denominación que es el campo que contiene el nombre.
+--Solucion
+select denominacion from dpto where coddptodepende is null;
+
 
 /**
 14.	Obtener el departamento que más empleados tiene
@@ -174,6 +216,15 @@ SELECT t.coddpto, t.denominacion, t.num_empleados
                 GROUP BY d.denominacion
             ) t2);
 
+--Solucion
+select denominacion from dpto,empleado where empleado.coddpto=dpto.coddpto
+    group by dpto.coddpto,denominacion 
+    having count(empleado.codemple)>=all(
+        select count(codemple)
+            from empleado
+            group by coddpto
+        );
+
 /**
 15.	Obtener todos los departamentos existentes en la empresa y los empleados (si
 los tiene) que pertenecen a él.
@@ -182,14 +233,19 @@ SELECT d.coddpto, d.denominacion, e.nombre || ' ' || e.ape1 AS Empleado
     FROM dpto d
     INNER JOIN empleado e ON d.coddpto = e.coddpto
     ORDER BY d.coddpto;
-    
+-- MAL: Al no usar LEFT JOIN descarta los departamentos que no tienen empleados
+--Corrección: 15.- mal resuelta, deberias usar left join para mostrar todos los departamentos. No deberías usar group by, solo order by.
+
 /** Muestra todos los departamentos existentes en la empresa y el numero de empleados
 de cada departamente (si los tiene) que pertenecen a él
 **/
 SELECT d.coddpto, d.denominacion, COUNT(e.codemple) FROM dpto d
     INNER JOIN empleado e ON d.coddpto = e.coddpto
     GROUP BY d.denominacion, d.coddpto;
-    
+
+--Solucion
+select denominacion,nombre,ape1,ape2 from dpto td left join empleado te on td.coddpto=te.coddpto order by 1;
+
 /**
 16.	Obtener un listado ordenado alfabéticamente donde aparezcan los nombres de 
 los empleados y a continuación el literal "tiene comisión" si la tiene o "no tiene
@@ -199,14 +255,29 @@ comisión" si no la tiene.
 SELECT e.nombre || ' ' || e.ape1 AS Empleado, NVL2(e.comision, 'tiene comision', 'no tiene comision') AS Comision
     FROM empleado e
     ORDER BY e.nombre ASC;
-    
+
+--Solucion
+Select nombre, ape1,ape2, 'tiene comision' as Comision from empleado where comision is not null
+UNION
+Select nombre, ape1,ape2, 'no tiene comision' as Comision from empleado where comision is null order by 4,2;
+
+--O bien con la funciÃ³n decode
+Select nombre, ape1,ape2, decode(nvl(comision,0),0,'tiene comision','no tiene comision') as Comision from empleado;
+
 /**
 17.	Obtener un listado de las localidades en las que hay centros y no vive ningún
 empleado ordenado alfabéticamente.
 **/
 SELECT c.localidad FROM centro c
     LEFT OUTER JOIN empleado e ON c.localidad = e.localidad;
-    
+
+--Corrección: 17.- mal resuelta, deberías usar not in o minus.
+--MAL, la Solucion es esta
+select upper(tc.localidad) from centro tc minus select upper(te.localidad) from empleado te order by 1;
+
+-- TambiÃ©n podrÃ­a hacerse con not in: 
+select upper(c.localidad) from centro c WHERE UPPER(c.localidad) NOT IN (SELECT UPPER(e.localidad) from empleado e) order by c.localidad;
+
 /**
 18.	Obtener a los nombres, apellidos de los empleados que no son jefes de departamento.
 **/
@@ -215,7 +286,10 @@ SELECT e.codemple, e.nombre, e.ape1 || ' ' || e.ape2 AS apellidos
     WHERE e.codemple NOT IN (
         SELECT d.codemplejefe FROM dpto d
         );
-        
+
+--Solucion
+select nombre,ape1,ape2 from empleado where codemple not in (select codemplejefe from dpto);
+
 /**
 19.	Esta cuestión puntúa doble. Se desea dar una gratificación por navidades en
 función de la antigüedad en la empresa siguiendo estas pautas:
@@ -245,3 +319,12 @@ SELECT nombre, FLOOR(MONTHS_BETWEEN(SYSDATE, fechaingreso)/12) AS Antiguedad,
         END AS gratificacion
     FROM empleado
     ORDER BY nombre;
+    
+--Solucion
+select nombre,ape1,ape2, 100 as Gratificacion from empleado where trunc((sysdate-fechaingreso)/365) between 1 and 5
+union
+select nombre,ape1,ape2, 50*((sysdate-fechaingreso)/365) as Gratificacion from empleado where trunc((sysdate-fechaingreso)/365) between 6 and 10
+union
+select nombre,ape1,ape2, 70*((sysdate-fechaingreso)/365) as Gratificacion from empleado where trunc((sysdate-fechaingreso)/365) between 11 and 20
+union
+select nombre,ape1,ape2, 100*((sysdate-fechaingreso)/365) as Gratificacion from empleado where trunc((sysdate-fechaingreso)/365)> 21;
