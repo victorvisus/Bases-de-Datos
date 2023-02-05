@@ -2,3 +2,7 @@ bbdd.txt
 *~lock*.*
 *.bkp
 *~$*.*
+*.ova
+*.mp4
+UD_PLSQL/00_Oracle21c_MaquinaVirtual/
+UD_PLSQL/00_Oracle21c_MaquinaVirtual/*
