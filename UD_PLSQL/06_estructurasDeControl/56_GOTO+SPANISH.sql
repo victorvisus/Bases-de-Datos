@@ -1,6 +1,6 @@
 DECLARE
   p  VARCHAR2(30);
-  n  PLS_INTEGER :=5;
+  n  PLS_INTEGER :=90;
 BEGIN
   FOR j in 2..ROUND(SQRT(n)) LOOP
     IF n MOD j = 0 THEN
