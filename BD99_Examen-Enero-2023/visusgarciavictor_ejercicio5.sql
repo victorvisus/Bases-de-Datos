@@ -8,6 +8,7 @@ SELECT nombre FROM trabajador
     GROUP BY nombre
     HAVING UPPER(nombre) LIKE('%RR%')
 );
+--- cuestión 1: Parcialmente bien resuelta, la condicion de la primera consulta nunca se puede complir.
 
 -- 2)
 SELECT id_supv, COUNT(id_t) AS Num_trabajadores FROM trabajador
@@ -20,6 +21,7 @@ SELECT LOWER(nombre) FROM trabajador
     ) OR (
         SELECT MIN(tarifa) FROM trabajador
     );
+--- cuestión 3: mal resuelta. Estructura erronea OR. Deberías usar UNION con dos consultas o IN en una subconsulta y los valores obtenidos de las dos subconsultas.
 
 -- 4)
 SELECT t.nombre FROM trabajador t
@@ -39,6 +41,7 @@ SELECT (t.tarifa * a.num_dias) AS Coste FROM trabajador t, edificio e, asignacio
     WHERE a.id_t = t.id_t AND a.id_e = e.id_e
     GROUP BY e.categoria
     HAVING e.categoria = 3 AND t.oficio = 'ALBAÑIL';
+--- cuestión 6: parcialmente bien resuelta. deberías usar LEFT join para que aparezcan los edificios tambien sin coste.
 
 -- 7)
 SELECT t.nombre, (t.tarifa * a.num_dias) AS Importe FROM trabajadores t
@@ -47,7 +50,7 @@ SELECT t.nombre, (t.tarifa * a.num_dias) AS Importe FROM trabajadores t
     WHERE a.fecha_inicio BETWEEN '2001-10-01' AND '2001-10-30'
     GROUP BY e.categoria
     HAVING e.categoria = 1;
-
+--- cuestión 7: parcialmente bien resuelta. deberías usar LEFT join para que aparezcan los trabajadores que no ganan
 
 
 
