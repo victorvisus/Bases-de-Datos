@@ -24,5 +24,7 @@ EXCEPTION
         dbms_output.put_line('demasiados empleados');
     WHEN OTHERS THEN
         dbms_output.put_line('error inexperado');
+        dbms_output.put_line('Cód. de error ' || SQLCODE);
+        dbms_output.put_line('Mensaje de error ' || SQLERRM);
 END;
 /

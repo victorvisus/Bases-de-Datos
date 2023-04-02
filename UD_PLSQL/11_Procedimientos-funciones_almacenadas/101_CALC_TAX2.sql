@@ -3,7 +3,7 @@ create or replace PROCEDURE CALC_TAX_OUT
     T1 IN NUMBER,
     R1 OUT NUMBER)
 IS
-  --TAX NUMBER:=0;
+  --TAX NUMBER:=0; --Por recibir un tercer parametro OUT no es necesaria esta variable
   SAL NUMBER:=0;
 BEGIN
    IF T1 <0 OR T1 > 60 THEN 
@@ -11,7 +11,7 @@ BEGIN
     END IF;    
    SELECT SALARY INTO SAL FROM EMPLOYEES    WHERE EMPLOYEE_ID=EMPL;
    --T1:=0;
-   R1:=SAL*T1/100;
+   R1:=SAL*T1/100; --Al guardarse en una variable almacvenada en memoria no es necesario el RETURN
    DBMS_OUTPUT.PUT_line('SALARY:'||SAL);
   -- DBMS_OUTPUT.PUT_line('TAX:'||TAX);
 EXCEPTION
