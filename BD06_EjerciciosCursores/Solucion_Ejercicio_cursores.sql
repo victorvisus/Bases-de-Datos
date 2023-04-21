@@ -69,51 +69,53 @@ END ver_emple_apell;
 CREATE OR REPLACE PROCEDURE emp_5maxsal
 AS
 CURSOR c_emp IS
-SELECT apellido, salario FROM emple
-ORDER BY salario DESC;
-vr_emp c_emp%ROWTYPE;
-i NUMBER;
+    SELECT apellido, salario FROM emple ORDER BY salario DESC;
+
+    vr_emp c_emp%ROWTYPE;
+    i NUMBER;
+
 BEGIN
-i:=1;
-OPEN c_emp;
-FETCH c_emp INTO vr_emp;
-WHILE c_emp%FOUND AND i<=5 LOOP
-DBMS_OUTPUT.PUT_LINE(vr_emp.apellido ||
-' * '|| vr_emp.salario);
-FETCH c_emp INTO vr_emp;
-i:=I+1;
-END LOOP;
-CLOSE c_emp;
+    i:=1;
+    OPEN c_emp;
+    FETCH c_emp INTO vr_emp;
+    WHILE c_emp%FOUND AND i<=5 LOOP
+        DBMS_OUTPUT.PUT_LINE(vr_emp.apellido ||' * '|| vr_emp.salario);
+        FETCH c_emp INTO vr_emp;
+        i:=I+1;
+    END LOOP;
+    CLOSE c_emp;
 END emp_5maxsal;
 
 	  	
 5) Codificar un programa que visualice los dos empleados que ganan menos de cada oficio.
 CREATE OR REPLACE PROCEDURE emp_2minsal
 AS
-CURSOR c_emp IS
-SELECT apellido, oficio, salario FROM emple
-ORDER BY oficio, salario;
-vr_emp c_emp%ROWTYPE;
-oficio_ant EMPLE.OFICIO%TYPE;
-i NUMBER;
+    CURSOR c_emp IS
+        SELECT apellido, oficio, salario FROM emple
+        ORDER BY oficio, salario;
+    vr_emp c_emp%ROWTYPE;
+    oficio_ant EMPLE.OFICIO%TYPE;
+    i NUMBER;
 BEGIN
-OPEN c_emp;
-oficio_ant:='*';
-FETCH c_emp INTO vr_emp;
-WHILE c_emp%FOUND LOOP
-IF oficio_ant <> vr_emp.oficio THEN
-oficio_ant := vr_emp.oficio;
-i := 1;
-END IF;
-IF i <= 2 THEN
-DBMS_OUTPUT.PUT_LINE(vr_emp.oficio||' * '
-||vr_emp.apellido||' * '
-||vr_emp.salario);
-END IF;
-FETCH c_emp INTO vr_emp;
-i:=I+1;
-END LOOP;
-CLOSE c_emp;
+    OPEN c_emp;
+    oficio_ant:='*';
+
+    FETCH c_emp INTO vr_emp;
+    WHILE c_emp%FOUND LOOP
+        IF oficio_ant <> vr_emp.oficio THEN
+            oficio_ant := vr_emp.oficio;
+            i := 1;
+        END IF;
+
+        IF i <= 2 THEN
+            DBMS_OUTPUT.PUT_LINE(vr_emp.oficio||' * ' ||vr_emp.apellido||' * ' ||vr_emp.salario);
+        END IF;
+
+        FETCH c_emp INTO vr_emp;
+        i:=I+1;
+    END LOOP;
+    
+    CLOSE c_emp;
 END emp_2minsal;
 
  

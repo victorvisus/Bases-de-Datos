@@ -1,38 +1,173 @@
 
 /* CREACION DE PROCEDIMIENTOS QUE USAN cursores */ .
 
-1) Desarrollar un procedimiento que visualice el apellido y la fecha de alta de todos los empleados ordenados por apellido.
+/*******************************************************************************
+1) Desarrollar un procedimiento que visualice el apellido y la fecha de alta de 
+todos los empleados ordenados por apellido.
+********************************************************************************/
 CREATE OR REPLACE PROCEDURE ver_emple
-AS
+IS
+    CURSOR C1 IS SELECT apellido, fecha_alt FROM EMPLE ORDER BY apellido ASC;
+    --CURSOR C1 IS SELECT * FROM EMPLE;
+BEGIN
+        dbms_output.put_line('Procedimiento con Cursor Declarado ---------------');
 
+    FOR i IN C1 LOOP
+        dbms_output.put_line('Apellido: ' || i.apellido || ' - ' || 'Fecha de alta: ' || i.fecha_alt);
+    END LOOP;
 END ver_emple;
+/
 
-2) Codificar un procedimiento que muestre el nombre de cada departamento y el nÃºmero de empleados que tiene.
+EXECUTE ver_emple;
+/
+
+-- Op. Sin Declarar un Cursos --------------------------------------------------
+CREATE OR REPLACE PROCEDURE ver_emple_op2
+IS
+
+BEGIN
+    dbms_output.put_line('Procedimiento sin Cursor Declarado ---------------');
+    
+    FOR i IN ( 
+        SELECT apellido, fecha_alt FROM EMPLE ORDER BY apellido ASC
+        ) LOOP
+        dbms_output.put_line('Apellido: ' || i.apellido || ' - ' || 'Fecha de alta: ' || i.fecha_alt);
+    END LOOP;
+END ver_emple_op2;
+/
+
+EXECUTE ver_emple_op2;
+/
+
+/*******************************************************************************
+2) Codificar un procedimiento que muestre el nombre de cada departamento y el 
+número de empleados que tiene.
+********************************************************************************/
 CREATE OR REPLACE PROCEDURE ver_emple_depart
 AS
-
+    CURSOR cur_depart IS
+        SELECT d.dnombre, COUNT(e.emp_no) AS num_empl FROM depart d
+            INNER JOIN emple e on e.dept_no = d.dept_no
+            GROUP BY d.dnombre;
+            
+BEGIN
+    FOR i IN cur_depart LOOP
+        dbms_output.put_line('Nom. Dpto.: ' || i.dnombre || ' - ' || 'No. Empleados: ' || i.num_empl);
+    END LOOP;
+    
 END ver_emple_depart;
+/
 
-3) Escribir un procedimiento que reciba una cadena y visualice el apellido y el nÃºmero de empleado de todos los empleados cuyo apellido contenga la cadena especificada. Al finalizar visualizar el nÃºmero de empleados mostrados.
+EXECUTE ver_emple_depart;
+/
+
+
+/*******************************************************************************
+3) Escribir un procedimiento que reciba una cadena y visualice el apellido y el 
+número de empleado de todos los empleados cuyo apellido contenga la cadena especificada.
+Al finalizar visualizar el número de empleados mostrados.
+********************************************************************************/
 CREATE OR REPLACE PROCEDURE ver_emple_apell(cadena VARCHAR2)
 AS
+    CURSOR empl_cur(cadena VARCHAR2) IS
+        SELECT * FROM emple e WHERE apellido LIKE '%'||cadena||'%';
+    empleados emple%ROWTYPE;
+BEGIN
+/*
+    FOR i IN empl_cur(cadena) LOOP
+          dbms_output.put_line(i.emp_no || ' ' || i.apellido);
+    END LOOP;
+*/
+    OPEN empl_cur(cadena);
+    LOOP
+        FETCH empl_cur INTO empleados;
+        EXIT WHEN empl_cur%NOTFOUND;
+          dbms_output.put_line(empleados.emp_no || ' ' || empleados.apellido);
+    END LOOP;
+    
+    dbms_output.put_line('He encontrado ' || empl_cur%ROWCOUNT || ' empleados');
+    CLOSE empl_cur;
 
 END ver_emple_apell;
+/
 
-4) Escribir un programa que visualice el apellido y el salario de los cinco empleados que tienen el salario mÃ¡s alto.
+EXECUTE ver_emple_apell('SAN');
+/
+
+/*******************************************************************************
+4) Escribir un programa que visualice el apellido y el salario de los cinco 
+empleados que tienen el salario más alto.
+********************************************************************************/
 CREATE OR REPLACE PROCEDURE emp_5maxsal
 AS
+    CURSOR sal IS
+        SELECT apellido, salario FROM emple ORDER BY salario DESC;
+        --Ordena la consulta por salario descendiente para leer los 5 primeros puestos del cursor
+    empleados sal%ROWTYPE;
+    i NUMBER;
 
+BEGIN
+    dbms_output.put_line('Con bucle WHILE --------------------------------------');
+    OPEN sal;
+    i := 1;
+    FETCH sal INTO empleados;
+    WHILE sal%FOUND AND i <= 5 LOOP
+        dbms_output.put_line(empleados.apellido || ' ' || empleados.salario);
+        FETCH sal INTO empleados;
+        i:=i+1;
+    END LOOP;
+    dbms_output.put_line('He encontrado ' || sal%ROWCOUNT || ' empleados con WHILE');
+    CLOSE sal;
+--------------------------------------------------------------------------------
+    dbms_output.put_line('Con bucle LOOP ---------------------------------------');
+    OPEN sal;
+    i := 1;
+    LOOP
+        FETCH sal INTO empleados;
+        EXIT WHEN i > 5;
+        
+        dbms_output.put_line(empleados.apellido || ' ' || empleados.salario);
+        i := i+1;
+    END LOOP;
+    
+    dbms_output.put_line('He encontrado ' || sal%ROWCOUNT || ' empleados con FOR');
+    CLOSE sal;
+    
 END emp_5maxsal;
+/
 
-	  	
-5) Codificar un programa que visualice los dos empleados que ganan menos de cada oficio.
+EXECUTE emp_5maxsal;
+/
+/*******************************************************************************
+5) Codificar un programa que visualice los dos empleados que ganan menos de cada
+oficio.
+********************************************************************************/
 CREATE OR REPLACE PROCEDURE emp_2minsal
 AS
+--    CURSOR sal IS
+--        SELECT oficio, apellido, salario FROM emple
+--        ORDER BY oficio, salario ASC;
+--    empleados sal%ROWTYPE;
+--    i INTEGER;
+--BEGIN
+--    i := 1;
+--    OPEN sal;
+--    
+--    LOOP
+--        FETCH sal INTO empleados;
+--        
+--        LOOP
+--            dbms_output.put_line(empleados.apellido || ' - ' || emplados.salario);
+--            EXIT WHEN i > 2
+--            i := i + 1
 
 END emp_2minsal;
+/
 
- 
+SELECT oficio, apellido, salario FROM emple
+    ORDER BY oficio, salario ASC;
+
+/******************************************************************************* 
 6) Escribir un programa que muestre, en formato similar a las rupturas de control o secuencia vistas en SQL*plus los siguientes datos:
 - Para cada empleado: apellido y salario.
 - Para cada departamento: NÃºmero de empleados y suma de los salarios del departamento.
