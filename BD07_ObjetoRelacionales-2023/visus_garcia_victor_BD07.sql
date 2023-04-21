@@ -12,7 +12,7 @@
  .	sexo VARCHAR2(1),
  .	fecha_nac DATE
 */
-CREATE OR REPLACE TYPE persona AS OBJECT(
+CREATE OR REPLACE TYPE personal AS OBJECT(
     --Atributos
     codigo INTEGER,
     dni VARCHAR2(10),
@@ -20,7 +20,7 @@ CREATE OR REPLACE TYPE persona AS OBJECT(
     apellidos VARCHAR2(30),
     sexo VARCHAR2(1),
     fecha_nac DATE
-);
+) NOT FINAL;
 /
 
 /*
@@ -28,7 +28,11 @@ CREATE OR REPLACE TYPE persona AS OBJECT(
  .	tipo  CHAR ,
  .	antiguedad INTEGER 
 */
-
+CREATE OR REPLACE TYPE responsable UNDER personal(
+    tipo  CHAR,
+    antiguedad INTEGER
+);
+/
 /*
 1.C.-	Crea el tipo de objeto "Zonas" con los siguientes atributos:
  .	codigo INTEGER, 
@@ -49,3 +53,21 @@ CREATE OR REPLACE TYPE zonas AS OBJECT(
 1.D.-	Crea, como tipo heredado de "Personal", el tipo de objeto "Comercial" con los siguientes atributos:
  .	zonaComercial Zonas
 */
+CREATE OR REPLACE TYPE comercial UNDER personal(
+    zonaComercial zonas
+);
+/
+
+/*******************************************************************************
+ Actividad 2.	Crea un método constructor para el tipo de objetos "Responsable",
+ en el que se indiquen como parámetros el código, nombre, primer apellido, segundo
+ apellido y tipo. Este método debe asignar al atributo apellidos los datos de 
+ primer apellido y segundo apellido que se han pasado como parámetros, uniéndolos
+ con un espacio entre ellos.
+ *******************************************************************************/
+ 
+ 
+ /******************************************************************************
+  3.	Crea un método getNombreCompleto para el tipo de objetos Responsable que 
+  permita obtener su nombre completo con el formato apellidos nombre.
+  ******************************************************************************/
