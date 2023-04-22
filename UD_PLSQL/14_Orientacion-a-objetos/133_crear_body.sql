@@ -11,9 +11,9 @@ create or replace TYPE body PRODUCTO  AS
       return precio;
     end ver_precio;
     
-    MEMBER PROCEDURE cambiar_precio(pvp number) as
+    MEMBER PROCEDURE cambiar_precio(precio number) as
     begin
-      precio:=pvp;
+      self.precio:=precio;
     end cambiar_precio;
     
     MEMBER PROCEDURE mayus AS
