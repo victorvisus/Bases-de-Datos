@@ -3,21 +3,20 @@ DROP TYPE zonas;
 DROP TYPE responsable;
 DROP TYPE personal;
 
+-- TAREA 7 - BASES DE DATOS -- Actividades 1, 2 y 3 - Crear Objetos ------------
 
-
--- TAREA 7 - BASES DE DATOS
 /*******************************************************************************
  Actividad 1.	Crea el tipo de objetos "Personal" con los siguientes atributos:
- ********************************************************************************/
+********************************************************************************/
 
 /*
 1.A.-	Crea el tipo de objetos "Personal" con los siguientes atributos:
- .	codigo INTEGER,
- .	dni VARCHAR2(10),
- .	nombre VARCHAR2(30),
- .	apellidos VARCHAR2(30),
- .	sexo VARCHAR2(1),
- .	fecha_nac DATE
+     .	codigo INTEGER,
+     .	dni VARCHAR2(10),
+     .	nombre VARCHAR2(30),
+     .	apellidos VARCHAR2(30),
+     .	sexo VARCHAR2(1),
+     .	fecha_nac DATE
 */
 CREATE OR REPLACE TYPE personal AS OBJECT(
     --Atributos
@@ -30,26 +29,31 @@ CREATE OR REPLACE TYPE personal AS OBJECT(
     
     --Métodos
     MEMBER FUNCTION getDatos RETURN VARCHAR2
+    
 ) NOT FINAL;
 /
+/**** Creo el BODY de la clase "personal" ****/
 CREATE OR REPLACE TYPE BODY personal AS
 
+    --Métodos
     MEMBER FUNCTION getDatos RETURN VARCHAR2 AS
     BEGIN
         RETURN 'Datos del objeto: - ' ||
-            'Código: ' || codigo || ' ' ||
-            'DNI: ' || dni || ' ' ||
-            'Nombre: ' || nombre || ' ' ||
-            'Apellidos: ' || apellidos || ' ' ||
-            'Sexo: ' || sexo || ' ' ||
+            'Código: ' || codigo || ' · ' ||
+            'DNI: ' || dni || ' · ' ||
+            'Nombre: ' || nombre || ' · ' ||
+            'Apellidos: ' || apellidos || ' · ' ||
+            'Sexo: ' || sexo || ' · ' ||
             'Fecha de Nacimiento ' || fecha_nac;
     END getDatos;
 END;
 /
+
 /*
-1.B.-	Crea, como tipo heredado de "Personal", el tipo de objeto "Responsable" con los siguientes atributos:
- .	tipo  CHAR ,
- .	antiguedad INTEGER 
+1.B.-	Crea, como tipo heredado de "Personal", el tipo de objeto "Responsable" 
+con los siguientes atributos:
+     .	tipo  CHAR ,
+     .	antiguedad INTEGER 
 */
 CREATE OR REPLACE TYPE responsable UNDER personal(
     tipo  CHAR,
@@ -60,19 +64,20 @@ CREATE OR REPLACE TYPE responsable UNDER personal(
     
     --Actividad 2.	Crea un método constructor para el tipo de objetos "Responsable"...
     CONSTRUCTOR FUNCTION responsable(
-        codigo INTEGER, nombre VARCHAR2, ape_uno VARCHAR2, ape_dos VARCHAR2, tipo CHAR
+        r_codigo INTEGER, r_nombre VARCHAR2, r_ape_uno VARCHAR2, r_ape_dos VARCHAR2, r_tipo CHAR
     ) RETURN SELF AS RESULT,
     
     --Actividad 3.	Crea un método getNombreCompleto para el tipo de objetos Responsable... 
     MEMBER FUNCTION getNombreCompleto RETURN VARCHAR2
 );
 /
+
 /*
 1.C.-	Crea el tipo de objeto "Zonas" con los siguientes atributos:
- .	codigo INTEGER, 
- .	nombre VARCHAR2(20), 
- .	refRespon REF Responsable, 
- .	codigoPostal CHAR(5),
+     .	codigo INTEGER,
+     .	nombre VARCHAR2(20), 
+     .	refRespon REF Responsable, 
+     .	codigoPostal CHAR(5),
 */
 CREATE OR REPLACE TYPE zonas AS OBJECT(
     --Atributos
@@ -87,8 +92,9 @@ CREATE OR REPLACE TYPE zonas AS OBJECT(
 /
 
 /*
-1.D.-	Crea, como tipo heredado de "Personal", el tipo de objeto "Comercial" con los siguientes atributos:
- .	zonaComercial Zonas
+1.D.-	Crea, como tipo heredado de "Personal", el tipo de objeto "Comercial" 
+con los siguientes atributos:
+     .	zonaComercial Zonas
 */
 CREATE OR REPLACE TYPE comercial UNDER personal(
     zonaComercial zonas
@@ -107,32 +113,34 @@ CREATE OR REPLACE TYPE BODY responsable AS
     OVERRIDING MEMBER FUNCTION getDatos RETURN VARCHAR2 AS
     BEGIN
         RETURN 'Datos del objeto: - ' ||
-            'Código: ' || codigo || ' ' ||
-            'DNI: ' || dni || ' ' ||
-            'Nombre: ' || nombre || ' ' ||
-            'Apellidos: ' || apellidos || ' ' ||
-            'Sexo: ' || sexo || ' ' ||
-            'Fecha de Nacimiento ' || fecha_nac || ' ' ||
-            'Tipo: ' || tipo || ' ' ||
+            'Código: ' || codigo || ' · ' ||
+            'DNI: ' || dni || ' · ' ||
+            'Nombre: ' || nombre || ' · ' ||
+            'Apellidos: ' || apellidos || ' · ' ||
+            'Sexo: ' || sexo || ' · ' ||
+            'Fecha de Nacimiento ' || fecha_nac || ' · ' ||
+            'Tipo: ' || tipo || ' · ' ||
             'Antigüedad ' || antiguedad;
     END getDatos;
     
     CONSTRUCTOR FUNCTION responsable(
-        codigo INTEGER, nombre VARCHAR2, ape_uno VARCHAR2, ape_dos VARCHAR2, tipo CHAR
+        r_codigo INTEGER, r_nombre VARCHAR2, r_ape_uno VARCHAR2, r_ape_dos VARCHAR2, r_tipo CHAR
     ) RETURN SELF AS RESULT IS
+    
+    p_apellidos VARCHAR2(30) := r_ape_uno || ' ' || r_ape_dos;
+    
     BEGIN
-        SELF.codigo := codigo;
-        SELF.nombre := nombre;
-        SELF.apellidos := ape_uno || ' ' || ape_dos;
-        SELF.tipo := tipo;
-        
+        SELF.codigo := r_codigo;
+        SELF.nombre := r_nombre;
+        SELF.apellidos := p_apellidos;
+        SELF.tipo := r_tipo;
         RETURN;
     END;
 
-    /******************************************************************************
-    3.	Crea un método getNombreCompleto para el tipo de objetos Responsable que 
-    permita obtener su nombre completo con el formato apellidos nombre.
-    ******************************************************************************/
+/*******************************************************************************
+3.	Crea un método getNombreCompleto para el tipo de objetos Responsable que 
+permita obtener su nombre completo con el formato apellidos nombre.
+********************************************************************************/
     MEMBER FUNCTION getNombreCompleto RETURN VARCHAR2 IS
     BEGIN
         RETURN apellidos || ', ' || nombre;
