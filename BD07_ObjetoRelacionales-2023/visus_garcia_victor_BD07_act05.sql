@@ -7,7 +7,7 @@ hasta 10 objetos Zonas.
 Guarda en una instancia listaZonas1 de dicha lista, dos Zonas
      .	codigo: 1
      .	nombre: zona 1
-     .	refResponsable: Referencia al responsable cuyo código es 5
+     .	refResponsable: Referencia al responsable cuyo código es 6
      .	codigo postal: 06834
      
      .	codigo: 2
@@ -17,44 +17,52 @@ Guarda en una instancia listaZonas1 de dicha lista, dos Zonas
 ********************************************************************************/
 
 --DROP TYPE ListaZonas;
-DROP TABLE listazonas1;
+--DROP TYPE zonaslista;
+--DROP TABLE areas_comerciales;
+--DROP TABLE zonas_tab;
 
--- CREO EL VARRAY
+-- CREO EL VARRAY de Objetos ZONAS
 CREATE OR REPLACE TYPE ListaZonas IS VARRAY(10) OF zonas;
 /
--- CREO LA INSTANCIA listaZonas1
-CREATE TABLE listazonas1 OF zonas;
+
+-- CREO LA TABLA para guardar el VARRAY listaZonas1
+CREATE TABLE areas_comerciales (
+    codigo NUMBER PRIMARY KEY,
+    nombre_area VARCHAR2(100),
+    zonas ListaZonas
+);
+/
+SELECT REF(r) FROM responsables r WHERE r.codigo = 6;
 /
 DECLARE
---    TYPE ListaZonas IS VARRAY(10) OF zonas;
-    refResp REF responsable;
-    
+    refRespZona1 REF responsable;
+    refRespZona2 REF responsable;
     zona1 zonas;
     zona2 zonas;
     
-    listaZonas1 ListaZonas := ListaZonas();
-
+    listaZonas1 ListaZonas;
 BEGIN
 
-    -- Añadir Zona 1 --
-    SELECT REF(r) INTO refResp FROM responsables r WHERE r.codigo = 5;
-    zona1 := NEW zonas(1,'Zona 1',refResp,'06834');
-    listaZonas1.EXTEND();
-    listaZonas1(1) := zona1;
-    dbms_output.put_line('Añadida nueva zona: ' || listaZonas1(1).nombre);
+-- Creo Zona 1 --
+    -- Referencio a la tabla responsables y guardo en la variable refRespZona1 el responsable correspondiente
+    SELECT REF(r) INTO refRespZona1 FROM responsables r WHERE r.codigo = 6;
+    -- Instancio el objeto zonas: zona1
+    zona1 := NEW zonas(1,'Zona 1',refRespZona1,'06834');
 
-    -- Añadir Zona 2 --
-    SELECT REF(r) INTO refResp FROM responsables r WHERE r.dni = '51083099F';
-    zona2 := NEW zonas(2,'Zona 2',refResp,'28003');
-    listaZonas1.EXTEND();
-    listaZonas1(2) := zona2;
-    dbms_output.put_line('Añadida nueva zona: ' || listaZonas1(2).nombre);
-    
-    -- AÑADO EL VARRAY A LA TABLA listaZonas1 (no sé si es lo que pide el ejercicio)
-    INSERT INTO listazonas1 VALUES(listazonas1(1));
-    INSERT INTO listazonas1 VALUES(listazonas1(2));
+-- Creo Zona 2 --
+    -- Referencio a la tabla responsables y guardo en la variable refRespZona2 el responsable correspondiente
+    SELECT REF(r) INTO refRespZona2 FROM responsables r WHERE r.dni = '51083099F';
+    -- Instancio el objeto zonas: zona2
+    zona2 := NEW zonas(2,'Zona 2',refRespZona2,'28003');
+
+-- Inicializao el VARRAY y Añado las zonas --
+    listaZonas1 := ListaZonas(zona1, zona2);
+
+-- AÑADO EL VARRAY A LA TABLA areas_comerciales (no sé si es lo que pide el ejercicio)
+    INSERT INTO areas_comerciales VALUES(1, 'listazonas1', listazonas1);
 
 EXCEPTION
+    --Habia creado esta Exception para controlar la innexistencia del responsable con DNI 51083099F
 	WHEN no_data_found THEN
 	dbms_output.put_line('Error: El responsable no existe');
     
@@ -63,3 +71,7 @@ EXCEPTION
     
 END;
 /
+SELECT * FROM areas_comerciales;
+
+SELECT nombre_area, t2.*
+    FROM areas_comerciales, TABLE(areas_comerciales.zonas) t2;

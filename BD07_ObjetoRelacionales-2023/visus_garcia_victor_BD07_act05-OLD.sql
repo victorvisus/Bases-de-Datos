@@ -17,42 +17,42 @@ Guarda en una instancia listaZonas1 de dicha lista, dos Zonas
 ********************************************************************************/
 
 --DROP TYPE ListaZonas;
---DROP TYPE zonaslista;
---DROP TABLE areas_cemerciales;
---DROP TABLE zonas_tab;
+DROP TABLE listazonas1;
 
 -- CREO EL VARRAY
 CREATE OR REPLACE TYPE ListaZonas IS VARRAY(10) OF zonas;
 /
--- CREO LA TABLA para guardar el VARRAY listaZonas1
-CREATE TABLE areas_comerciales (
-    codigo NUMBER PRIMARY KEY,
-    nombre_area VARCHAR2(100),
-    zonas ListaZonas
-);
+-- CREO LA INSTANCIA listaZonas1
+CREATE TABLE listazonas1 OF zonas;
 /
-
 DECLARE
 --    TYPE ListaZonas IS VARRAY(10) OF zonas;
-    refRespZona1 REF responsable;
-    refRespZona2 REF responsable;
+    refResp REF responsable;
+    
     zona1 zonas;
     zona2 zonas;
     
-    listaZonas1 ListaZonas;
+    listaZonas1 ListaZonas := ListaZonas();
+
 BEGIN
 
-    -- Creo Zona 1 --
-    SELECT REF(r) INTO refRespZona1 FROM responsables r WHERE r.codigo = 5;
-    zona1 := NEW zonas(1,'Zona 1',refRespZona1,'06834');
-    -- Creo Zona 2 --
-    SELECT REF(r) INTO refRespZona2 FROM responsables r WHERE r.dni = '51083099F';
-    zona2 := NEW zonas(2,'Zona 2',refRespZona2,'28003');
-    -- Añado las zonas al VARRAY --
-    listaZonas1 := ListaZonas(zona1, zona2);
+    -- Añadir Zona 1 --
+    SELECT REF(r) INTO refResp FROM responsables r WHERE r.codigo = 5;
+    zona1 := NEW zonas(1,'Zona 1',refResp,'06834');
+    listaZonas1.EXTEND();
+    listaZonas1(1) := zona1;
+    dbms_output.put_line('Añadida nueva zona: ' || listaZonas1(1).nombre);
+
+    -- Añadir Zona 2 --
+    SELECT REF(r) INTO refResp FROM responsables r WHERE r.dni = '51083099F';
+    zona2 := NEW zonas(2,'Zona 2',refResp,'28003');
+    listaZonas1.EXTEND();
+    listaZonas1(2) := zona2;
+    dbms_output.put_line('Añadida nueva zona: ' || listaZonas1(2).nombre);
     
-    -- AÑADO EL VARRAY A LA TABLA areas_comerciales (no sé si es lo que pide el ejercicio)
-    INSERT INTO areas_comerciales VALUES(1, 'listazonas1', listazonas1);
+    -- AÑADO EL VARRAY A LA TABLA listaZonas1 (no sé si es lo que pide el ejercicio)
+    INSERT INTO listazonas1 VALUES(listazonas1(1));
+    INSERT INTO listazonas1 VALUES(listazonas1(2));
 
 EXCEPTION
 	WHEN no_data_found THEN
