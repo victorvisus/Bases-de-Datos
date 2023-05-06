@@ -17,7 +17,6 @@ Guarda en una instancia listaZonas1 de dicha lista, dos Zonas
 ********************************************************************************/
 
 
-
 -- CREO EL VARRAY de Objetos ZONAS
 CREATE OR REPLACE TYPE ListaZonas IS VARRAY(10) OF zonas;
 /
@@ -28,17 +27,19 @@ CREATE TABLE areas_comerciales (
     zonas ListaZonas
 );
 /
--- CREO LA TABLA INDICADA EN LA ACTIVIDAD 6
+-- CREO LA TABLA comerciales, INDICADA EN LA ACTIVIDAD 6
 CREATE TABLE comerciales OF comercial;
 /
-SELECT REF(r) FROM responsables r WHERE r.codigo = 6;
-/
+--SELECT REF(r) FROM responsables r WHERE r.codigo = 6;
+--/
 DECLARE
+    --Instancio los objetos que referencian a 'responsable'
     refRespZona1 REF responsable;
     refRespZona2 REF responsable;
+    --Instancio los objetos 'zonas'
     zona1 zonas;
     zona2 zonas;
-    
+    --Instancio el VARRAY
     listaZonas1 ListaZonas;
     
     --Variable Actividad 7
@@ -60,12 +61,10 @@ BEGIN
 -- Inicializao el VARRAY y Añado las zonas --
     listaZonas1 := ListaZonas(zona1, zona2);
 
--- AÑADO EL VARRAY A LA TABLA areas_comerciales (no sé si es lo que pide el ejercicio)
+-- AÑADO EL VARRAY A LA TABLA areas_comerciales (no sé si es lo que pide el ejercicio, pero así lo entiendo yo)
     INSERT INTO areas_comerciales VALUES(1, 'listazonas1', listazonas1);
 
 
-
-    
 /*******************************************************************************
 6.	Crea una tabla TablaComerciales de objetos Comercial.
 
@@ -117,17 +116,17 @@ EXCEPTION
 	WHEN no_data_found THEN
 	dbms_output.put_line('Error: El responsable no existe');
     
---    WHEN OTHERS THEN
---    DBMS_OUTPUT.PUT_LINE('Error, abortando ejecución.');
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Error, abortando ejecución.');
     
 END;
 /
 
 SELECT * FROM areas_comerciales;
 SELECT * FROM comerciales;
---SELECT nombre_area, t2.* FROM areas_comerciales, TABLE(areas_comerciales.zonas) t2;
+SELECT nombre_area, t2.* FROM areas_comerciales, TABLE(areas_comerciales.zonas) t2;
 --DROP TYPE ListaZonas;
 --DROP TYPE zonaslista;
-DROP TABLE areas_comerciales;
+--DROP TABLE areas_comerciales;
 --DROP TABLE zonas_tab;
-DROP TABLE comerciales;
+--DROP TABLE comerciales;

@@ -22,65 +22,27 @@ Inserta en dicha tabla las siguientes filas:
      .		    (debe tomarse de la lista)
 ********************************************************************************/
 --DROP TABLE comerciales;
-CREATE TABLE comerciales OF comercial;
-/
--- Acceder a columnas tipo VARRAY
---SELECT * FROM areas_comerciales;
--- Operador TABLE devuelve la información con cada uno de los valores que tiene el VARRAY
---SELECT t2.* FROM areas_comerciales, TABLE(areas_comerciales.zonas) t2;
--- Muestra en una fila para cada uno de los valores del VARRAY
+
+--Creo la tabla 'coemrciales'
+CREATE TABLE tablaComerciales OF comercial;
+
 
 DECLARE
-    TYPE listaZonas1 IS VARRAY(10) OF zonas;
-    zonas_comerc listaZonas1 := listaZonas1();
-    area1 zonas;
-    area2 zonas;
+    listaZonas1 areas_comerciales.zonas%TYPE;
     
-    refRespZona1 REF responsable;
-    refRespZona2 REF responsable;
-    
-    comerc1 comercial;
-    comerc2 comercial;
-
-    --CURSOR areas IS SELECT t2.* FROM areas_comerciales, TABLE(areas_comerciales.zonas) t2;
-    CURSOR areas IS SELECT t2.codigo, t2.nombre, t2.codigopostal FROM areas_comerciales, TABLE(areas_comerciales.zonas) t2;
-    TYPE datos_area IS RECORD (
-        codigo INTEGER,
-        nombre VARCHAR2(20),
-        codigoPostal CHAR(5)
-    );
-    datos_area1 datos_area;
-    datos_area2 datos_area;
 BEGIN
-    
-    SELECT REF(r) INTO refRespZona1 FROM responsables r WHERE r.codigo = 6;
-    SELECT REF(r) INTO refRespZona2 FROM responsables r WHERE r.dni = '51083099F';
-    
-    OPEN areas;
-    FETCH areas INTO datos_area1;
-    dbms_output.put_line('Código área: ' || datos_area1.codigo);
-    dbms_output.put_line('Código nombre: ' || datos_area1.nombre);
-    dbms_output.put_line('Código codigoPostal: ' || datos_area1.codigoPostal);
-    area1 := NEW zonas(datos_area1.codigo, datos_area1.nombre, refRespZona1, datos_area1.codigoPostal);
-    
-    FETCH areas INTO datos_area2;
-    dbms_output.put_line('Código área: ' || datos_area2.codigo);
-    dbms_output.put_line('Código nombre: ' || datos_area2.nombre);
-    dbms_output.put_line('Código codigoPostal: ' || datos_area2.codigoPostal);
-    area2 := NEW zonas(datos_area2.codigo, datos_area2.nombre, refRespZona2, datos_area2.codigoPostal);
-    
-    CLOSE areas;
-    zonas_comerc.EXTEND(2);
-    zonas_comerc(1) := area1;
-    zonas_comerc(2) := area2;
+    SELECT zonas INTO listaZonas1 FROM areas_comerciales;
+    --dbms_output.put_line('listaZonas1 pos. 1 nombre: ' || listaZonas1(1).nombre);
+    --dbms_output.put_line('listaZonas1 pos. 2 nombre: ' || listaZonas1(2).nombre);
 
-    INSERT INTO comerciales VALUES (
-        comercial(100, '23401092Z', 'MARCOS', 'SUAREZ LOPEZ', 'M', '30/3/1990', zonas_comerc(1) )
+    --Inserto en la tabla comerciales los dos comerciales, creandolos a la vez que se insertan
+    INSERT INTO tablaComerciales VALUES (
+        comercial(100, '23401092Z', 'MARCOS', 'SUAREZ LOPEZ', 'M', '30/3/1990', listaZonas1(1) )
     );
-    INSERT INTO comerciales VALUES (
-        comercial(102, '6932288V', 'ANASTASIA', 'GOMES PEREZ', 'F', '28/11/1984', zonas_comerc(2) )
+    INSERT INTO tablaComerciales VALUES (
+        comercial(102, '6932288V', 'ANASTASIA', 'GOMES PEREZ', 'F', '28/11/1984', listaZonas1(2) )
     );
-    
+
 EXCEPTION
 	WHEN no_data_found THEN
 	dbms_output.put_line('Error: El responsable no existe');

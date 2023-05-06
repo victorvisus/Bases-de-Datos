@@ -1,7 +1,14 @@
+/*
+DROP TABLE comerciales;
+DROP TABLE areas_comerciales;
+DROP TYPE ListaZonas;
+DROP TABLE responsables;
+
 DROP TYPE comercial;
 DROP TYPE zonas;
 DROP TYPE responsable;
 DROP TYPE personal;
+*/
 
 -- TAREA 7 - BASES DE DATOS -- Actividades 1, 2 y 3 - Crear Objetos ------------
 
@@ -9,7 +16,7 @@ DROP TYPE personal;
  Actividad 1.	Crea el tipo de objetos "Personal" con los siguientes atributos:
 ********************************************************************************/
 
-/*
+/* -----------------------------------------------------------------------------
 1.A.-	Crea el tipo de objetos "Personal" con los siguientes atributos:
      .	codigo INTEGER,
      .	dni VARCHAR2(10),
@@ -25,31 +32,11 @@ CREATE OR REPLACE TYPE personal AS OBJECT(
     nombre VARCHAR2(30),
     apellidos VARCHAR2(30),
     sexo VARCHAR2(1),
-    fecha_nac DATE,
-    
-    --Métodos
-    MEMBER FUNCTION getDatos RETURN VARCHAR2
-    
+    fecha_nac DATE
+
 ) NOT FINAL;
-/
-/**** Creo el BODY de la clase "personal" ****/
-CREATE OR REPLACE TYPE BODY personal AS
 
-    --Métodos
-    MEMBER FUNCTION getDatos RETURN VARCHAR2 AS
-    BEGIN
-        RETURN 'Datos del objeto: - ' ||
-            'Código: ' || codigo || ' · ' ||
-            'DNI: ' || dni || ' · ' ||
-            'Nombre: ' || nombre || ' · ' ||
-            'Apellidos: ' || apellidos || ' · ' ||
-            'Sexo: ' || sexo || ' · ' ||
-            'Fecha de Nacimiento ' || fecha_nac;
-    END getDatos;
-END;
-/
-
-/*
+/* -----------------------------------------------------------------------------
 1.B.-	Crea, como tipo heredado de "Personal", el tipo de objeto "Responsable" 
 con los siguientes atributos:
      .	tipo  CHAR ,
@@ -59,9 +46,6 @@ CREATE OR REPLACE TYPE responsable UNDER personal(
     tipo  CHAR,
     antiguedad INTEGER,
     
-    --MÉTODOS:
-    OVERRIDING MEMBER FUNCTION getDatos RETURN VARCHAR2,
-    
     --Actividad 2.	Crea un método constructor para el tipo de objetos "Responsable"...
     CONSTRUCTOR FUNCTION responsable(
         r_codigo INTEGER, r_nombre VARCHAR2, r_ape_uno VARCHAR2, r_ape_dos VARCHAR2, r_tipo CHAR
@@ -70,9 +54,8 @@ CREATE OR REPLACE TYPE responsable UNDER personal(
     --Actividad 3.	Crea un método getNombreCompleto para el tipo de objetos Responsable... 
     MEMBER FUNCTION getNombreCompleto RETURN VARCHAR2
 );
-/
 
-/*
+/* -----------------------------------------------------------------------------
 1.C.-	Crea el tipo de objeto "Zonas" con los siguientes atributos:
      .	codigo INTEGER,
      .	nombre VARCHAR2(20), 
@@ -85,13 +68,12 @@ CREATE OR REPLACE TYPE zonas AS OBJECT(
     nombre VARCHAR2(20),
     refRespon REF Responsable,
     codigoPostal CHAR(5),
-    
-    --Métodos
-    MEMBER FUNCTION getDatos RETURN VARCHAR2
-);
-/
 
-/*
+    --Actividad 9 - Método MAP
+    MAP MEMBER FUNCTION ordenarZonas RETURN VARCHAR2
+);
+
+/* -----------------------------------------------------------------------------
 1.D.-	Crea, como tipo heredado de "Personal", el tipo de objeto "Comercial" 
 con los siguientes atributos:
      .	zonaComercial Zonas
@@ -99,7 +81,7 @@ con los siguientes atributos:
 CREATE OR REPLACE TYPE comercial UNDER personal(
     zonaComercial zonas
 );
-/
+
 
 /*******************************************************************************
 Actividad 2.	Crea un método constructor para el tipo de objetos "Responsable",
@@ -110,19 +92,6 @@ con un espacio entre ellos.
 ********************************************************************************/
 CREATE OR REPLACE TYPE BODY responsable AS
  
-    OVERRIDING MEMBER FUNCTION getDatos RETURN VARCHAR2 AS
-    BEGIN
-        RETURN 'Datos del objeto: - ' ||
-            'Código: ' || codigo || ' · ' ||
-            'DNI: ' || dni || ' · ' ||
-            'Nombre: ' || nombre || ' · ' ||
-            'Apellidos: ' || apellidos || ' · ' ||
-            'Sexo: ' || sexo || ' · ' ||
-            'Fecha de Nacimiento ' || fecha_nac || ' · ' ||
-            'Tipo: ' || tipo || ' · ' ||
-            'Antigüedad ' || antiguedad;
-    END getDatos;
-    
     CONSTRUCTOR FUNCTION responsable(
         r_codigo INTEGER, r_nombre VARCHAR2, r_ape_uno VARCHAR2, r_ape_dos VARCHAR2, r_tipo CHAR
     ) RETURN SELF AS RESULT IS
@@ -146,4 +115,23 @@ permita obtener su nombre completo con el formato apellidos nombre.
         RETURN apellidos || ', ' || nombre;
     END getNombreCompleto;
  END;
- /
+ 
+
+/*******************************************************************************
+ 9.	Crea un método MAP ordenarZonas para el tipo Zonas. Este método debe retornar
+ el nombre completo del Responsable al que hace referencia cada zona.
+ Para obtener el nombre debes utilizar el método getNombreCompleto que se ha 
+ creado anteriormente
+ *******************************************************************************/
+ CREATE OR REPLACE TYPE BODY zonas AS
+ 
+    MAP MEMBER FUNCTION ordenarZonas RETURN VARCHAR2 IS
+    respon responsable;
+    BEGIN
+        SELECT DEREF(refRespon) INTO respon FROM DUAL;
+        RETURN respon.getNombreCompleto();
+    END ordenarZonas;
+ 
+ END;
+ 
+ 

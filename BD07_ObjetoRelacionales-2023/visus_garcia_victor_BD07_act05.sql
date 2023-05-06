@@ -15,25 +15,19 @@ Guarda en una instancia listaZonas1 de dicha lista, dos Zonas
      .	refResponsable: Referencia al responsable cuyo DNI es 51083099F.
      .	codigo postal: 28003
 ********************************************************************************/
-
---DROP TYPE ListaZonas;
---DROP TYPE zonaslista;
 --DROP TABLE areas_comerciales;
---DROP TABLE zonas_tab;
+--DROP TYPE ListaZonas;
 
 -- CREO EL VARRAY de Objetos ZONAS
 CREATE OR REPLACE TYPE ListaZonas IS VARRAY(10) OF zonas;
 /
-
 -- CREO LA TABLA para guardar el VARRAY listaZonas1
 CREATE TABLE areas_comerciales (
     codigo NUMBER PRIMARY KEY,
     nombre_area VARCHAR2(100),
     zonas ListaZonas
 );
-/
-SELECT REF(r) FROM responsables r WHERE r.codigo = 6;
-/
+
 DECLARE
     refRespZona1 REF responsable;
     refRespZona2 REF responsable;
@@ -44,14 +38,14 @@ DECLARE
 BEGIN
 
 -- Creo Zona 1 --
-    -- Referencio a la tabla responsables y guardo en la variable refRespZona1 el responsable correspondiente
-    SELECT REF(r) INTO refRespZona1 FROM responsables r WHERE r.codigo = 6;
+    -- Referencio a la tabla TablaResponsables  y guardo en la variable refRespZona1 el responsable correspondiente
+    SELECT REF(r) INTO refRespZona1 FROM TablaResponsables  r WHERE r.codigo = 6;
     -- Instancio el objeto zonas: zona1
     zona1 := NEW zonas(1,'Zona 1',refRespZona1,'06834');
 
 -- Creo Zona 2 --
-    -- Referencio a la tabla responsables y guardo en la variable refRespZona2 el responsable correspondiente
-    SELECT REF(r) INTO refRespZona2 FROM responsables r WHERE r.dni = '51083099F';
+    -- Referencio a la tabla TablaResponsables  y guardo en la variable refRespZona2 el responsable correspondiente
+    SELECT REF(r) INTO refRespZona2 FROM TablaResponsables  r WHERE r.dni = '51083099F';
     -- Instancio el objeto zonas: zona2
     zona2 := NEW zonas(2,'Zona 2',refRespZona2,'28003');
 
@@ -70,8 +64,10 @@ EXCEPTION
     DBMS_OUTPUT.PUT_LINE('Error, abortando ejecución.');
     
 END;
-/
+
+/*
 SELECT * FROM areas_comerciales;
 
 SELECT nombre_area, t2.*
     FROM areas_comerciales, TABLE(areas_comerciales.zonas) t2;
+*/

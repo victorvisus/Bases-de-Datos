@@ -21,12 +21,12 @@
 ********************************************************************************/
 --ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY';
 
-CREATE TABLE responsables OF responsable;
+CREATE TABLE TablaResponsables OF responsable;
 
-INSERT INTO responsables VALUES( responsable(5, '51083099F', 'Elena', 'Posta Llanos', 'F', '31/03/1975', 'N', 4) );
-INSERT INTO responsables VALUES( responsable(6, 'Javier', 'Jaramillo', 'Herrnandez', 'C') );
+INSERT INTO TablaResponsables VALUES( responsable(5, '51083099F', 'Elena', 'Posta Llanos', 'F', '31/03/1975', 'N', 4) );
+INSERT INTO TablaResponsables VALUES( responsable(6, 'Javier', 'Jaramillo', 'Herrnandez', 'C') );
 
-SELECT * FROM responsables;
+--SELECT * FROM TablaResponsables ;
 
 
 

@@ -1,5 +1,5 @@
 
-/* CREACION DE PROCEDIMIENTOS QUE USAN cursores */ .
+/* CREACION DE PROCEDIMIENTOS QUE USAN cursores */
 
 /*******************************************************************************
 1) Desarrollar un procedimiento que visualice el apellido y la fecha de alta de 
@@ -118,7 +118,7 @@ BEGIN
     END LOOP;
     dbms_output.put_line('He encontrado ' || sal%ROWCOUNT || ' empleados con WHILE');
     CLOSE sal;
---------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------- --
     dbms_output.put_line('Con bucle LOOP ---------------------------------------');
     OPEN sal;
     i := 1;
@@ -142,24 +142,22 @@ EXECUTE emp_5maxsal;
 5) Codificar un programa que visualice los dos empleados que ganan menos de cada
 oficio.
 ********************************************************************************/
+SELECT oficio, apellido, salario FROM emple
+        ORDER BY oficio, salario ASC;
+/
 CREATE OR REPLACE PROCEDURE emp_2minsal
 AS
---    CURSOR sal IS
---        SELECT oficio, apellido, salario FROM emple
---        ORDER BY oficio, salario ASC;
---    empleados sal%ROWTYPE;
---    i INTEGER;
---BEGIN
---    i := 1;
---    OPEN sal;
---    
---    LOOP
---        FETCH sal INTO empleados;
---        
---        LOOP
---            dbms_output.put_line(empleados.apellido || ' - ' || emplados.salario);
---            EXIT WHEN i > 2
---            i := i + 1
+    CURSOR sal IS
+        SELECT oficio, apellido, salario FROM emple
+        ORDER BY oficio, salario ASC;
+    empleados sal%ROWTYPE;
+    
+    oficio_ant sal.oficio%TYPE;
+    i INTEGER;
+BEGIN
+    dbms_output.put_line('Ejercicio 5');
+    
+    
 
 END emp_2minsal;
 /
