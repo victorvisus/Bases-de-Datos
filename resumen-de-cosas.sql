@@ -38,13 +38,13 @@ DECLARE
     nota INTEGER:=8; -- Se podría especificar nota INTEGER:=&nota
 BEGIN
     CASE
-       WHEN nota in (1,2) THEN
+        WHEN nota in (1,2) THEN
             DBMS_OUTPUT.PUT_LINE('Muy deficiente');
-       WHEN nota in (3,4) THEN
+        WHEN nota in (3,4) THEN
             DBMS_OUTPUT.PUT_LINE('Insuficiente');
-       WHEN nota = 5 THEN
+        WHEN nota = 5 THEN
             DBMS_OUTPUT.PUT_LINE('Suficiente');
-       WHEN nota = 6 THEN
+        WHEN nota = 6 THEN
             DBMS_OUTPUT.PUT_LINE('Bien');
         WHEN nota in(7,8) THEN
             DBMS_OUTPUT.PUT_LINE('Notable');
@@ -95,6 +95,7 @@ END bucle_for;
 /
 
 -- EXCEPCIONES - ERRORES -------------------------------------------------------
+SET SERVEROUT ON
 DECLARE
     supervisor agentes%ROWTYPE;
     empl emple%ROWTYPE;
@@ -216,3 +217,215 @@ BEGIN
     END IF;
 END control_salario;
 /
+
+
+-- Paquetes --------------------------------------------------------------------
+CREATE OR REPLACE PACKAGE nombre_paquete
+IS
+    PROCEDURE nombre_procedimiento(var1 NUMBER, var2 VARCHAR2);
+    FUNCTION nombre_funcion(f_var1 NUMBER, f_var2 VARCHAR2) RETURN VARCHAR2;
+    
+END nombre_paquete;
+/
+
+CREATE OR REPLACE PACKAGE BODY nombre_paquete
+IS
+    --Metodo privado:
+    FUNCTION funcion_privada(var1 NUMBER) RETURN NUMBER
+    AS
+        x NUMBER;
+    BEGIN
+        x := var1 + 10;
+        RETURN x;
+    END funcion_privada;
+    
+    PROCEDURE nombre_procedimiento(var1 NUMBER, var2 VARCHAR2)
+    AS
+    BEGIN
+        dbms_output.put_line('nombre_procedimiento() param 1: ' || var1);
+        dbms_output.put_line('nombre_procedimiento() param 1 usando metodo privado: ' || funcion_privada(var1));
+        dbms_output.put_line('nombre_procedimiento() param 2: ' || var2);
+        
+    END nombre_procedimiento;
+    
+    FUNCTION nombre_funcion(f_var1 NUMBER, f_var2 VARCHAR2) RETURN VARCHAR2
+    AS
+        resultado VARCHAR2(200);
+    BEGIN
+        resultado := 'nombre_funcion() param 1 usando metodo privado: ' || funcion_privada(f_var1) || '- El número enviado fué' || f_var1 || ' y el texto ' || f_var2;
+            
+        RETURN resultado;
+    END nombre_funcion;
+END nombre_paquete;
+/
+SET SERVEROUTPUT ON
+DECLARE
+    v1_proc NUMBER;
+    v2_proc VARCHAR2(100);
+    v1_func NUMBER;
+    v2_func VARCHAR2(100);
+    
+    return_funcion VARCHAR2(200);
+BEGIN
+    v1_proc := 5;
+    v2_proc := 'Test enviado a proc';
+    v1_func := 12;
+    v2_func := 'Test enviado a funcion';
+    
+    nombre_paquete.nombre_procedimiento(v1_proc, v2_proc);
+    
+    return_funcion := nombre_paquete.nombre_funcion(v1_func, v2_func);
+    dbms_output.put_line(return_funcion);
+END testeo;
+/
+
+
+-- Objetos ---------------------------------------------------------------------
+CREATE OR REPLACE TYPE nombre_obj AS OBJECT(
+    atributo1 NUMBER,
+    atributo2 VARCHAR2(30),
+    
+    --Método
+    MEMBER FUNCTION nombre_funcion RETURN VARCHAR
+    
+) NOT FINAL;
+/
+CREATE OR REPLACE TYPE BODY nombre_obj AS
+    
+    MEMBER FUNCTION nombre_funcion RETURN VARCHAR IS
+    BEGIN
+        RETURN SELF.atributo2;
+    END nombre_funcion;
+    
+END;
+/
+
+--Objeto padre no instanciable, del que no se pueden crear instancias del mismo
+CREATE OR REPLACE TYPE obj_padre AS OBJECT(
+    attr1 NUMBER,
+    attr2 VARCHAR2(30),
+    
+    MEMBER FUNCTION funcion1(param1 NUMBER) RETURN BOOLEAN
+    
+) NOT FINAL NOT INSTANTIABLE;
+/
+
+-- Herencia
+CREATE OR REPLACE TYPE nombre_obj_hijo UNDER nombre_obj (
+    atributo_hijo1 VARCHAR2(30),
+    
+    --Constructor
+    CONSTRUCTOR FUNCTION nombre_obj_hijo(
+        atributo1 NUMBER, atributo2 VARCHAR2, atributo_hijo1 VARCHAR2
+    ) RETURN SELF AS RESULT
+);
+/
+CREATE OR REPLACE TYPE BODY nombre_obj_hijo AS
+
+    CONSTRUCTOR FUNCTION nombre_obj_hijo(
+        atributo1 NUMBER, atributo2 VARCHAR2, atributo_hijo1 VARCHAR2
+    ) RETURN SELF AS RESULT IS
+    
+    BEGIN
+        SELF.atributo1 := atributo1;
+        SELF.atributo2 := atributo2;
+        SELF.atributo_hijo1 := atributo_hijo1;
+        RETURN;
+    END;
+END;
+/
+
+-- Map
+CREATE OR REPLACE TYPE objeto2 AS OBJECT(
+    refObjt REF nombre_obj,
+    attr1 NUMBER,
+
+    -- Map
+    MAP MEMBER FUNCTION ordenar RETURN NUMBER
+);
+/
+CREATE OR REPLACE TYPE BODY objeto2 AS
+
+    MAP MEMBER FUNCTION ordenar RETURN NUMBER IS
+    obj nombre_obj;
+    BEGIN
+        SELECT DEREF(refObjt) INTO obj FROM DUAL;
+        RETURN obj.nombre_funcion();
+    END ordenar;
+END;
+/
+
+--Crear Objetos
+DECLARE
+    objetoTipo1 nombre_obj;
+    objetoTipo2 nombre_obj_hijo;
+    objetoTipo3 objeto2;
+BEGIN
+    objetoTipo1 := nombre_obj(20, 'nombreObjeto');
+    objetoTipo2 := nombre_obj_hijo(30, 'nombreObjeto', 'es hijo');
+    objetoTipo3 := objeto2(objetoTipo1, 30);
+END;
+/
+
+--Tabla de Objetos
+CREATE TABLE tablaObjetos OF nombre_obj;
+INSERT INTO tablaObjetos VALUES(nombre_obj(10, 'atributo2'));
+INSERT INTO tablaObjetos VALUES(nombre_obj(13, 'nombre_atributo2'));
+SELECT * FROM tablaobjetos;
+/
+
+-- Referencia a Objetos
+DECLARE
+    refObj REF nombre_obj;
+    objetoTipo3 objeto2;
+BEGIN
+    SELECT REF(o) INTO refObj FROM tablaobjetos o WHERE o.atributo1 = 10;
+    objetoTipo3 := objeto2(refObj, 34);
+    dbms_output.put_line(objetoTipo3.attr1);
+END;
+/
+
+
+--VARRAY -----------------------------------------------------------------------
+
+--Crear VARRAY
+CREATE OR REPLACE TYPE listaObjetos IS VARRAY(10) OF objeto2;
+/
+--Crear tabla VARRAY
+CREATE TABLE tablaVarray (
+    cod NUMBER,
+    objetos listaObjetos
+);
+/
+DECLARE
+    refObj1 REF nombre_obj;
+    refObj2 REF nombre_obj;
+    objetoTipo3 objeto2;
+    objetoTipo4 objeto2;
+    varrayObj listaObjetos;
+    
+BEGIN
+    varrayObj := listaObjetos();
+    
+    SELECT REF(o) INTO refObj1 FROM tablaobjetos o WHERE o.atributo1 = 10;
+    objetotipo3 := objeto2(refObj1, 36);
+    varrayObj.EXTEND();
+    varrayObj(1) := objetotipo3;
+    
+    SELECT REF(o) INTO refObj2 FROM tablaobjetos o WHERE o.atributo1 = 10;
+    objetotipo4 := objeto2(refObj2, 36);
+    varrayObj.EXTEND();
+    varrayObj(2) := objetotipo4;
+    
+--    INSERT INTO tablavarray VALUES(1, varrayObj(1));
+--    INSERT INTO tablavarray VALUES(2, varrayObj(2));
+    
+    INSERT INTO tablavarray VALUES(1, varrayObj);
+END;
+/
+SELECT * FROM tablavarray;
+
+
+
+
+
