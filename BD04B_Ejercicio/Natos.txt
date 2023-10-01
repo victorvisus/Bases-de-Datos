@@ -1,0 +1,7 @@
+Ejercicios de consultas adicionales
+Utilizando los esquemas de cada documento:
+Pensad que tenemos las tablas cargadas con registros de datos..
+Realizar las consultas de obtención de datos que se piden (no hay que hacer la eliminación ni actualización de datos).
+Ejercicio 1 --> desde la 1 hasta la 16
+Ejercicio 2 --> desde la 1 hasta la 14
+Las consultas se puede hacer utlizando el entorno de Oracle o bien directamente sobre un editor de textos.

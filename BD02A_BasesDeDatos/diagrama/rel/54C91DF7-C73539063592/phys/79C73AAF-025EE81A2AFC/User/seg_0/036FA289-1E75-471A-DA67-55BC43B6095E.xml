@@ -1,0 +1,9 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<UserOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" name="VICTOR" directorySegmentName="seg_0" id="036FA289-1E75-471A-DA67-55BC43B6095E">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjName>VICTOR</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:05 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<schemaObject>900F8E7A-0C53-AFB6-F510-80F1FB2EA273</schemaObject>
+</UserOraclev10g>

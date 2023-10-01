@@ -1,0 +1,30 @@
+	
+Buenas tardes,
+
+Una vez revisado la tarea algunos comentarios al respecto:
+Has entregado la misma tarea del año pasado, sin tener en cuenta los campos que se pedían.
+
+- Ejercicio 1 (3.25/4 ptos):
+- 1.1 Creación de las tablas:
+    - los nombres de campos no corresponden con los solicitados.
+- 1.2 Asignacion de las restricciones: bien resueltas.
+
+- Ejercicio 2 (4.75/5.5 ptos):
+- 2.1--Añadir la columna FechaUltimaEntrada: bien resuelta.
+- 2.2--Añadir la columna Beneficio : parcialmente bien resuelta. has excluido los extremos 1 y 5 al no poner el =, sería >=1 y =<5. Mismo error del año pasado.
+- 2.3--Eliminar la columna Descripción: bien resuelta
+- 2.4--Añadir la columna llamada perecedero: bien resuelta.
+- 2.5--Modificar el tamaño de la columna nomproducto: mal resuelta, renombras otra.
+- 2.6--Añadir la columna llamada IVA: bien resuelta
+- 2.7--Controlar el nº de tiendas en una misma zona: bien resuelta
+- 2.8--Renombrar la tabla STOCK: bien resuelta
+- 2.9--Eliminar la tabla FAMILIA: bien resuelta.
+- 2.10--Crear un usuario y darle todos los privilegios: bien resuelta.
+- 2.11--Retira permisos al usuario anterior: bien resuelta.
+
+- Ejercicio 3 (0.25/0.5ptos):
+- 3.1 Obtención del diagrama:  bien resuelta, pero con los campos erroneos en las tablas.
+
+Cualquier cuestión comentamos.
+
+Saludos.

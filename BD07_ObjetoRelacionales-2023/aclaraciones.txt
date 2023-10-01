@@ -1,0 +1,12 @@
+Te adjunto un comprimido con las actividades separadas en varios scripts, creo que se entiende mejor.
+
+Para que se ejecuten de manera independiente, en los scripts:
+- visus_garcia_victor_BD07_act05.sql
+- visus_garcia_victor_BD07_act06.sql
+- visus_garcia_victor_BD07_act07-8.sql
+
+Este último lo he unido porque me ha parecido lo mas indicado.
+
+También te mando los ejercicios 1, 2 y 3 en un mismo script:
+- visus_garcia_victor_BD07_act-1-2-3.sql
+

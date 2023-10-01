@@ -1,0 +1,78 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev12c class="oracle.dbtools.crest.model.design.storage.oracle.v12c.TableProxyOraclev12c" name="TIENDA" directorySegmentName="seg_0" id="2DBD71EE-EB12-5FB8-C3A9-F475565A1676">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<schemaObject>900F8E7A-0C53-AFB6-F510-80F1FB2EA273</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>792AF0AB-0A33-7D21-9760-D3B06909008B</segment>
+<tableSpace>0CE5183E-908E-F5FA-054C-DA9DD93DD599</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="TELEFONO" id="42FE4AC3-9B14-EE24-73D6-1FD255ECE304">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DENOTIENDA" id="50336723-F4E5-9AFA-2284-F1C4D1252C9F">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CODTIENDA" id="8D088EB6-43E8-198D-3194-5F79BC38E2E5">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CODIGOPOSTAL" id="DB6CABBC-A937-7675-783A-95B6C677C987">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PROVINCIA" id="EE049566-E330-C1B5-FC0B-A7E54AEE0BEC">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="TIE_CPO_UN" id="5FF3D247-5F16-7E55-2750-BCDBFC32A3F1">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:07 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<schemaObject>900F8E7A-0C53-AFB6-F510-80F1FB2EA273</schemaObject>
+<segment>0237D282-04C3-B3A2-EDBD-D3BB053D4AC4</segment>
+<tableSpace>0CE5183E-908E-F5FA-054C-DA9DD93DD599</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="TIENDA_PK" id="322E99A4-E41A-81EF-5E0D-1BAAC6D2AD64">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:07 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<schemaObject>900F8E7A-0C53-AFB6-F510-80F1FB2EA273</schemaObject>
+<segment>0237D282-04C3-B3A2-EDBD-D3BB053D4AC4</segment>
+<tableSpace>0CE5183E-908E-F5FA-054C-DA9DD93DD599</tableSpace>
+<indexSegment>0237D282-04C3-B3A2-EDBD-D3BB053D4AC4</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="TIE_CPO_UN" id="AD84FD88-3B99-4573-3077-B2D937AEA0C0">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:07 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<segment>0237D282-04C3-B3A2-EDBD-D3BB053D4AC4</segment>
+<tableSpace>0CE5183E-908E-F5FA-054C-DA9DD93DD599</tableSpace>
+<existingIndex>5FF3D247-5F16-7E55-2750-BCDBFC32A3F1</existingIndex>
+<indexSegment>0237D282-04C3-B3A2-EDBD-D3BB053D4AC4</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
+</TableProxyOraclev12c>

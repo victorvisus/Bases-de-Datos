@@ -1,0 +1,68 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev12c class="oracle.dbtools.crest.model.design.storage.oracle.v12c.TableProxyOraclev12c" name="PROD_TIENDAS" directorySegmentName="seg_0" id="BBD1DAC8-B9E3-AA9C-DF0F-CF8B559311DD">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<schemaObject>900F8E7A-0C53-AFB6-F510-80F1FB2EA273</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>792AF0AB-0A33-7D21-9760-D3B06909008B</segment>
+<tableSpace>0CE5183E-908E-F5FA-054C-DA9DD93DD599</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="FECHAULTIMAENTRADA" id="27B3B835-002C-0354-4CE5-54A10BA58E9A">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="CODPRODUCTO" id="AB9EE733-B5CD-CB40-A309-4067CF6A61B4">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UNIDADES" id="CF64E167-2CD8-6E99-9588-D3477D9D52B6">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BENEFICIO" id="E5C9226F-3652-D5CC-FD3B-6CCEE0D13986">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CODTIENDA" id="F7080B48-364C-7FFB-55DA-CAB8C512A5E4">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:06 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="STK_CPR_FK" id="0EF959CD-840E-4B16-778F-4362EAE63E92">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:09 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="STK_CTI_FK" id="1FE3FE44-E086-E64E-73E1-1ED2F83C321A">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:09 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PROD_TIENDAS_PK" id="EB849993-81C8-B570-1E55-FE85CB34C073">
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:07 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<schemaObject>900F8E7A-0C53-AFB6-F510-80F1FB2EA273</schemaObject>
+<segment>0237D282-04C3-B3A2-EDBD-D3BB053D4AC4</segment>
+<tableSpace>0CE5183E-908E-F5FA-054C-DA9DD93DD599</tableSpace>
+<indexSegment>0237D282-04C3-B3A2-EDBD-D3BB053D4AC4</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev12c>

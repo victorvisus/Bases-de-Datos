@@ -1,0 +1,81 @@
+Dudas:
+-- ******************************************************************************** --
+-- *************************************************************** TABLE Profesores --
+
+Le pongo el código que habia realizado en un principio y a posterior las dudas que me han surgido:
+
+CREATE TABLE Profesores (	
+	nombre VARCHAR2(20),
+	apellido_1 VARCHAR2(20),
+	apellido_2 VARCHAR2(20),
+	nif_prof CHAR(9) CONSTRAINT prof_nif_PK PRIMARY KEY,
+	direccion VARCHAR(50),
+	titulacion VARCHAR(30),
+	salario_mes NUMBER(4,2),
+	CONSTRAINT prof_NN NOT NULL (nombre,apellido_1,salario_mes),
+	CONSTRAINT prof_UN UNIQUE (nombre)
+    );
+
+
+Me da un error con la siguiente sentencia, y no he sabido encontrar el fallo:
+(Me indica "identificar no válido" y me marca con un * debajo de NOT NULL)
+
+Lo he solucionado poniendo en cada declaración de campo las restricciones, pero me gustaria saber cual es el fallo que he cometido con la sentencia original.
+
+Al introducir datos en la tabla Profesores, el valor que le doy para el campo "salario_mes" es de 1000.56 y me indica el error: "Valor mayor que el que permite la precisión especificada para esta columna". ¿Como deberia indicar para una precisión de 4 cifras con 2 decimales?
+
+-- ******************************************************************************** --
+-- ******************************************************************* TABLE Cursos --
+
+Le pongo el código que habia realizado en un principio y a posterior las dudas que me han surgido:
+
+CREATE TABLE Cursos (	
+	curso VARCHAR2(15) CONSTRAINT cur_nom_UN UNIQUE,
+	id_curso NUMBER(3) CONSTRAINT cur_idcurs_PK PRIMARY KEY,
+	nif_prof CHAR(9) CONSTRAINT cur_prof_FK FOREIGN KEY REFERENCES Profesores(nif_prof) ON DELETE SET NULL,
+	num_max_alumnos NUMBER(2),
+	fecha_fin DATE,
+	fecha_fin DATE CONSTRAINT cur_fin CHECK (fecha_ini<fecha_fin),
+	num_horas NUMBER(4),
+	CONSTRAINT cur_NN NOT NULL (curso, num_horas)
+	);
+    
+    
+Me indica: "especificación de restricción no permitida aquí" y me marca con un * en CONSTRAINT de la declaración de las restricciones del campo nif_prof. --> Lo he quitado de donde habia indicado la descripción original mente y lo he añadido al final del script como puedes observar en la resolución del ejercicio, además de haberle quitado el nombre del campo entreparentesis de la tabla a la que hace referencia la clave, pero no entiendo donde esta el fallo.
+
+Después me indica error al declarar la restricción en el campo "fecha_fin", me indica el error "La restricción de control de columna no puede hacer referencia a otras columnas". Opto por añadir la restricción una vez creada la tabla. Con la linea: ALTER TABLE Cursos ADD CONSTRAINT cur_fin_val CHECK (fecha_fin>fecha_ini);
+
+Al sacar del código la restricción de control para el campo "fecha_fin", me dá el mismo error que al crear la tabla "Profesores": Me indica "identificar no válido" y me marca con un * debajo de NOT NULL.
+¿Como deberia declarar la restricción NOT NULL en una CONSTRAINT y aplicarla a distintos campos de la tabla?
+
+CREATE TABLE ....
+.
+.
+.
+CONSTRAINT cur_NN NOT NULL (curso, num_horas)
+.
+);
+
+de este modo no me funciona
+
+-- ******************************************************************************** --
+-- ****************************************************************** TABLE Alumnos --
+
+Me ha dado algun quebradero de cabeza el hacer que en el campo "sexo" solo pueda tener como valor M o H, pero, buscando por ahi, al final lo he conseguido con la orden (que no sé si es la manera más correcta):
+
+ALTER TABLE Alumnos ADD CONSTRAINT alu_sex_VAL CHECK (sexo IN ('M','H'));
+
+
+-- ******************************************************************************** --
+-- ******************************************************************** EJERCICIO 2 --
+
+He tenido problemas en el punto 7, debido a que para quitar la PRIMARY KEY del campo nif_prof asi como la FOREIGN KEY de este mismo campo en la TABLA Cursos, para "romper" la relación que exitia entre ambas tablas, he usado DISABLE CONSTRAINT para ambas claves, pero no me admitia la nueva clave primaria compuesta, por eso he tenido que eliminar ambas restricciones con DROP CONSTRAINT.
+¿porque no es suficiente con DISABLE?
+
+En el apartado 10, para poder crear un usuario me daba el error "Nombre de usuario o rol comun no valido", imposibiliatando hacer el ejercicio, buscando la solución al error he encontrado que este es debido a que en SQL Plus se inicia sesión en CDB cuando deberia ser en una PDB. Para solucionar esta situación hay que insertar en la linea de comandos 
+
+alter session set "_ORACLE_SCRIPT"=true;
+
+Más info: https://stackoverflow.com/questions/33330968/error-ora-65096-invalid-common-user-or-role-name-in-oracle
+
+En este punto también no he logrado acceder con el usuario victor a la tabla Tutores, he rebuscado y creo que tengo todos los pasos bien hechos, pero no me sale este apartado. ¿podrías indicarme donde tengo el fallo?

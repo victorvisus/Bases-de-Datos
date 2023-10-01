@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="490019E0-AA04-20E1-1E52-DEB0227F62E9" containerWithKeyObject="BBD1DAC8-B9E3-AA9C-DF0F-CF8B559311DD" localFKIndex="0EF959CD-840E-4B16-778F-4362EAE63E92" name="STK_CPR_FK">
+<sourceConnName>Victor - CFGSDAMBD</sourceConnName>
+<sourceObjSchema>VICTOR</sourceObjSchema>
+<sourceObjName>STK_CPR_FK</sourceObjName>
+<createdBy>Victor</createdBy>
+<createdTime>2021-10-25 16:19:09 UTC</createdTime>
+<ownerDesignName>diagrama</ownerDesignName>
+<referredTableLongName>VICTOR.PRODUCTO</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>13ABD517-027D-EB58-B978-8C6CE934CBA6</referredTableID>
+<keyObject>CC1B3061-CB41-E5D2-6C85-62BA14A9C5DC</keyObject>
+<referredKeyID>CC1B3061-CB41-E5D2-6C85-62BA14A9C5DC</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>CODPRODUCTO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
