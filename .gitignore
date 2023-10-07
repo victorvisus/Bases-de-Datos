@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 bbdd.txt
 *~lock*.*
 *.bkp
@@ -7,3 +8,7 @@ bbdd.txt
 UD_PLSQL/00_Oracle21c_MaquinaVirtual/
 UD_PLSQL/00_Oracle21c_MaquinaVirtual/*
 pass.txt
+=======
+UD_PLSQL/
+EJERCICIOS_PLSQL/
+>>>>>>> master
