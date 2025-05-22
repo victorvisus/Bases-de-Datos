@@ -1,0 +1,36 @@
+CREATE OR REPLACE PACKAGE PACK1
+IS
+  FUNCTION CONVERT (NAME VARCHAR2, CONVERSION_TYPE CHAR) RETURN VARCHAR2;
+END;
+/
+
+CREATE OR REPLACE PACKAGE BODY PACK1
+IS
+-- Funciones Privadas, no estan declaradas en la cabecera
+-- Para poder usarlas tienen que estar declaradas antes del procedimiento que las necesita
+    FUNCTION UP(NAME VARCHAR2) RETURN VARCHAR2 
+    IS
+    BEGIN
+        RETURN UPPER(NAME);
+    END UP;
+
+    FUNCTION DO(NAME VARCHAR2) RETURN VARCHAR2 
+    IS
+    BEGIN
+        RETURN LOWER(NAME);
+    END DO;
+
+-- Código del Procedimiento
+    FUNCTION CONVERT (NAME VARCHAR2, CONVERSION_TYPE CHAR) RETURN VARCHAR2
+     IS
+     BEGIN
+        IF CONVERSION_TYPE='U' THEN
+           RETURN(UP(NAME));
+        ELSIF CONVERSION_TYPE='L' THEN
+           RETURN(DO(NAME));
+        ELSE
+           DBMS_OUTPUT.PUT_LINE('EL PARAMETRO DEBE SER U o L');
+       END IF;
+    END CONVERT;
+
+END PACK1;

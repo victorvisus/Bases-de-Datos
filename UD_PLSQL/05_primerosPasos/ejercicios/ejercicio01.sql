@@ -1,0 +1,6 @@
+-- PONER NOMBRE Y APELLIDOS0 POR PANTALLA
+SET SERVEROUTPUT ON
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Víctor' || ' ' || 'Visús' || ' ' || 'García');
+END;

@@ -1,2 +1,19 @@
+<<<<<<< HEAD
 UD_PLSQL/
 EJERCICIOS_PLSQL/
+=======
+<<<<<<< HEAD
+bbdd.txt
+*~lock*.*
+*.bkp
+*~$*.*
+*.ova
+*.mp4
+UD_PLSQL/00_Oracle21c_MaquinaVirtual/
+UD_PLSQL/00_Oracle21c_MaquinaVirtual/*
+pass.txt
+=======
+UD_PLSQL/
+EJERCICIOS_PLSQL/
+>>>>>>> master
+>>>>>>> master
